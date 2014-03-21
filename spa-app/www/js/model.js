@@ -5,6 +5,10 @@ var DataPoint = function(stamp, value) {
 
 	//converts to a chart applicable data point
 	self.toPoint = function() {
-		
-	}
+
+	};
+}
+
+var Chart = function() {
+	
 }
