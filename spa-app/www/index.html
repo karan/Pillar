@@ -10,11 +10,37 @@
 </head>
 <body>
     <div class="app">
+        <div id="title" data-role="header">
+            <h1>Home</h1>
+        </div>
+        <div class="contents" data-role="tabs">
+            <div data-role="ui-content" id="home-page">
+                <p>Home Screen (show messages, etc)</p>
+            </div>
+            <div data-role="ui-content" id="forms-page">
+                <p>Stats page content goes here. (To be Styled)</p>      
+            </div>
+            <div data-role="ui-content" id="stats-page">
+                <div class="fullscreen">
+                    <canvas id="graph"></canvas>
+                </div>
+            </div>
+            <div data-role="footer" data-position="fixed" data-fullscreen="false">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#home-page" data-bind="click: goToHome" class="ui-btn-active ui-state-persist">Home</a></li>
+                        <li><a href="#forms-page" data-bind="click: goToForms">Forms</a></li>
+                        <li><a href="#stats-page" data-bind="click: goToStats">Stats</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
     <script type="text/javascript" src="js/knockout-3.1.0.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.4.2.min.js"></script>
+    <script type="text/javascript" src="js/chart.js"></script>
     <script type="text/javascript" src="js/model.js"></script>
     <script type="text/javascript" src="js/viewmodel.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
