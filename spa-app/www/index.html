@@ -18,11 +18,11 @@
             <div data-role="ui-content" id="me-page">
                 <form id="time-selector">
                     <fieldset data-role="controlgroup" data-type="horizontal">
-                        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="3">
+                        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="3" data-bind="click: selectTime">
                         <label for="radio-choice-h-2a">Last Year</label>
-                        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="2">
+                        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="2" data-bind="click: selectTime">
                         <label for="radio-choice-h-2b">Last Month</label>
-                        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2c" value="1" checked="checked">
+                        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2c" value="1" checked="checked" data-bind="click: selectTime">
                         <label for="radio-choice-h-2c">Last Week</label>
                     </fieldset>
                 </form>

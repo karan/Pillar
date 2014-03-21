@@ -147,6 +147,10 @@ var ViewModel = function(init) {
 		return true;
 	};
 
+	self.selectTime = function() {
+		self.drawChart();
+	}
+
 	self.goToForms = function() {
 		$("#title > h1").text("New Entry");
 		return true;
