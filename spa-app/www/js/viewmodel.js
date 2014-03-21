@@ -3,9 +3,26 @@
 var ViewModel = function(init) {
 	var self = this;
 	self.user = {};
+	self.formAnswers = new ko.observableArray();
+	self.questionNumber = new ko.observable();
+	self.answer = new ko.observable();
+
+	$(window).resize(respondCanvas);
+
+	function respondCanvas(){ 
+		var w = $($("#graph").parent()).width();
+		var h = $($("#graph").parent()).height();
+		$("#graph").css({'width' : w, 'height' : h});
+	    $("#graph").attr('width', w);
+	    $("#graph").attr('height', h);
+	}
 
 	var loadVM = function(data) {
 		self.user = data.user;
+		self.formAnswers.push({
+			'prompt' : 'question one...',
+			'answer' : new ko.observable(5)
+		});
 	};
 
 	self.goToHome = function() {
@@ -23,6 +40,10 @@ var ViewModel = function(init) {
 		self.drawChart();
 		return true;
 	};
+
+	self.nextQuestion = function() {
+
+	}
 
 	self.drawChart = function() {
 		new Chart("#graph", [new DataPoint(120120, 20), new DataPoint(120303, 10), new DataPoint(120403, 12), new DataPoint(120503, 18), new DataPoint(120603, 9)]);
