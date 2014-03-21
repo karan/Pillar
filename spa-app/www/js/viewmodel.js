@@ -42,7 +42,7 @@ var ViewModel = function(init) {
 
 	var respondCanvas = function(){ 
 		var w = $(window).width();
-		var h = $(window).height() - $("#title").height() - $("#footing").height();
+		var h = $(window).height() - $("#title").height() - $("#footing").height() - 20;
 		$("#graph").css({'width' : w, 'height' : h});
 	    $("#graph").attr('width', w);
 	    $("#graph").attr('height', h);

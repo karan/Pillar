@@ -26,6 +26,7 @@ var ViewModel = function(init) {
 	self.formAnswers = new ko.observableArray();
 	self.questionNumber = new ko.observable(0);
 	self.answer = new ko.observable();
+	self.allmessages = new ko.observableArray();
 
     self.currentQuestion = ko.computed(function() {
         return self.formAnswers()[self.questionNumber()];
@@ -41,68 +42,96 @@ var ViewModel = function(init) {
 
 	var respondCanvas = function(){ 
 		var w = $(window).width();
-		var h = $(window).height() - $("#title").height() - $("#footing").height();
+		var h = $(window).height() - $("#title").height() - $("#footing").height() - 20;
 		$("#graph").css({'width' : w, 'height' : h});
 	    $("#graph").attr('width', w);
 	    $("#graph").attr('height', h);
-	    new Chart("#graph", [new DataPoint(120120, 10), new DataPoint(120303, 40), new DataPoint(120403, 30), new DataPoint(120503, 20), new DataPoint(120603, 50)]);
+	    new Chart("#graph", [new DataPoint(120120, 10), new DataPoint(120303, 40), new DataPoint(120403, 30), new DataPoint(120503, 20), new DataPoint(120603, 50), new DataPoint(120703, 35)]);
 	}
+
+	var resetForm = function() {
+		self.questionNumber(0);
+		for(var i = 0; i < self.formAnswers().length; i++) {
+			self.formAnswers()[i].answer(2);
+		}
+	};
 
 	var loadVM = function(data) {
 		self.drawChart();
 		self.user = data.user;
 		self.formAnswers.push({
-			'prompt' : 'question one...',
-			'answer' : new ko.observable(5)
+			'prompt' : 'Have you felt low in spirits or sad?',
+			'answer' : new ko.observable(2)
 		});
 		self.formAnswers.push({
-			'prompt' : 'question two...',
-			'answer' : new ko.observable(5)
+			'prompt' : 'Have you lost interest in your daily activities?',
+			'answer' : new ko.observable(2)
 		});
 		self.formAnswers.push({
-			'prompt' : 'question three...',
-			'answer' : new ko.observable(5)
+			'prompt' : 'Have you felt lacking in energy and strength?',
+			'answer' : new ko.observable(2)
 		});
 		self.formAnswers.push({
-			'prompt' : 'question four...',
+			'prompt' : 'Have you felt less self-confident?',
+			'answer' : new ko.observable(2)
+		});
+		/*
+		self.formAnswers.push({
+			'prompt' : ' Have you felt that life wasn\'t worth living?',
 			'answer' : new ko.observable(5)
+		});*/
+		self.formAnswers.push({
+			'prompt' : 'Have you had difficulty in concentrating?',
+			'answer' : new ko.observable(2)
 		});
 		self.formAnswers.push({
-			'prompt' : 'question five...',
-			'answer' : new ko.observable(5)
+			'prompt' : 'Have you felt very restless?',
+			'answer' : new ko.observable(2)
 		});
 		self.formAnswers.push({
-			'prompt' : 'question six...',
-			'answer' : new ko.observable(5)
+			'prompt' : 'Have you felt subdued?',
+			'answer' : new ko.observable(2)
 		});
 		self.formAnswers.push({
-			'prompt' : 'question seven...',
-			'answer' : new ko.observable(5)
+			'prompt' : 'Have you had trouble sleeping at night?',
+			'answer' : new ko.observable(2)
 		});
 		self.formAnswers.push({
-			'prompt' : 'question eight...',
-			'answer' : new ko.observable(5)
-		});
-		self.formAnswers.push({
-			'prompt' : 'question nine...',
-			'answer' : new ko.observable(5)
-		});
-		self.formAnswers.push({
-			'prompt' : 'question ten...',
-			'answer' : new ko.observable(5)
-		});
-		self.formAnswers.push({
-			'prompt' : 'question eleven...',
-			'answer' : new ko.observable(5)
+			'prompt' : 'Have you suffered from reduced appetite?',
+			'answer' : new ko.observable(2)
 		});
 	};
 
 	var calculateScore = function() {
-		return 0;
+		var sum = 0;
+		for(var i = 0; i < self.formAnswers().length; i++) {
+			sum += self.formAnswers()[i].answer();
+		}
+		return 50 - sum;
 	}
 
 	self.goToActivity = function() {
 		$("#title > h1").text("Activity");
+		// $.getJSON(app.server + '/allmessages', function(data) { 
+		// 	console.log(data);
+		// 	for (var i=0; i<data["messages"].length; i++)
+		//     	self.allmessages.push(data["messages"][i]);
+		// });
+		self.allmessages.push({
+            "message": "o thou art",
+            "username": "tu",
+            "_id": "532d7f7b0ae6fd58f7dc129a",
+            "__v": 0,
+            "created_at": "2014-03-22T12:18:03.217Z"
+        });
+        self.allmessages.push({
+            "message": "\"hello world\"",
+            "username": "tu",
+            "_id": "532d7f710ae6fd58f7dc1299",
+            "__v": 0,
+            "created_at": "2014-03-22T12:17:53.550Z"
+        });
+        console.log(self.allmessages);
 		return true;
 	};
 
@@ -128,10 +157,14 @@ var ViewModel = function(init) {
 	};
 
 	self.submitAnswers = function() {
-		/*var score = calculateScore();
-		$.post(app.server + '/addscore', {'score' : score}, function() {
-
-		}, "json");*/
+		var score = calculateScore();
+		$.post(app.server + '/addscore', {'score' : score}, function(data) {
+			$("#record-page-link").removeClass("ui-btn-active");
+			$("#record-page-link").removeClass("ui-state-persist");
+			resetForm();
+			self.goToMe();
+			$('#me-page-link').click();
+		}, "json");
 	};
 
 	self.addMessage = function() {

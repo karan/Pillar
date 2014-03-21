@@ -4,10 +4,20 @@
     GREEN  #ABFF9F
     GREY   #546975
 */
+body {
+    font-family: 'Roboto Slab', sans-serif;
+}
 .ui-body-c, .ui-overlay-c, .ui-page {
     background: #6ABBD8;
 }
 
+.full-width-slider input {
+    display: none;
+}
+
+.full-width-slider .ui-slider-track {
+    margin-left: 15px;
+}
 
 #graph {
     width: 100%;
@@ -17,4 +27,12 @@
 .fullscreen {
     width: 100%;
     height: 100%;
+}
+
+#activity-page > div > li {
+    margin-bottom: 20px;
+}
+
+body > div.ui-page.ui-page-theme-a.ui-page-header-fixed.ui-page-footer-fixed.ui-page-active > div > div.contents.ui-tabs.ui-widget.ui-widget-content.ui-corner-all {
+    padding: 15px 10px;
 }
