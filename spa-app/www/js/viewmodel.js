@@ -51,7 +51,7 @@ var ViewModel = function(init) {
 
 	var resetForm = function() {
 		for(var i = 0; i < self.formAnswers().length; i++) {
-			sum += self.formAnswers()[i].answer(2);
+			self.formAnswers()[i].answer(2);
 		}
 	};
 
