@@ -27,6 +27,7 @@ var ViewModel = function(init) {
 	self.questionNumber = new ko.observable(0);
 	self.answer = new ko.observable();
 	self.allmessages = new ko.observableArray();
+	self.dataPoints = [];
 
     self.currentQuestion = ko.computed(function() {
         return self.formAnswers()[self.questionNumber()];
@@ -46,7 +47,8 @@ var ViewModel = function(init) {
 		$("#graph").css({'width' : w, 'height' : h});
 	    $("#graph").attr('width', w);
 	    $("#graph").attr('height', h);
-	    new Chart("#graph", [new DataPoint(120120, 10), new DataPoint(120303, 40), new DataPoint(120403, 30), new DataPoint(120503, 20), new DataPoint(120603, 50), new DataPoint(120703, 35)]);
+	    //user self.dataPoints here
+	    new Chart("#graph", self.dataPoints);
 	}
 
 	var resetForm = function() {
@@ -56,9 +58,18 @@ var ViewModel = function(init) {
 		}
 	};
 
+	var loadPoints = function(data) {
+		var result = [];
+		for(var i = 0; i < data.length; i++) {
+			result.push(new DataPoint((new Date(data[i].timestamp).getTime() / 1000), data[i].score || 50));
+		}
+		return result;
+	};
+
 	var loadVM = function(data) {
 		self.drawChart();
 		self.user = data.user;
+		self.dataPoints = loadPoints(data.user.scores || []);
 		self.formAnswers.push({
 			'prompt' : 'Have you felt low in spirits or sad?',
 			'answer' : new ko.observable(2)
