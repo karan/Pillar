@@ -50,8 +50,14 @@ var ViewModel = function(init) {
 	}
 
 	var resetForm = function() {
-		self.questionNumber(0);
-		self.formAnswers.removeAll();
+		for(var i = 0; i < self.formAnswers().length; i++) {
+			sum += self.formAnswers()[i].answer(2);
+		}
+	};
+
+	var loadVM = function(data) {
+		self.drawChart();
+		self.user = data.user;
 		self.formAnswers.push({
 			'prompt' : 'Have you felt low in spirits or sad?',
 			'answer' : new ko.observable(2)
@@ -93,12 +99,6 @@ var ViewModel = function(init) {
 			'prompt' : 'Have you suffered from reduced appetite?',
 			'answer' : new ko.observable(2)
 		});
-	};
-
-	var loadVM = function(data) {
-		self.drawChart();
-		self.user = data.user;
-		resetForm();
 	};
 
 	var calculateScore = function() {
