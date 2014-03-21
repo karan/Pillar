@@ -13,6 +13,7 @@ var Chart = function(canvas, data, timeFrame) {
 	if(data.length == 0) {
 		return;
 	}
+	console.log(timeFrame);
 	//timeframe == 1 if last week, 2 if last month, 3 if last year
 
 	//out comes drawing on canvas
