@@ -25,7 +25,7 @@ var ViewModel = function(init) {
 	};
 
 	self.drawChart = function() {
-		var ctx = $("#graph").get(0).getContext("2d");
+		new Chart("#graph", [new DataPoint(120120, 20), new DataPoint(120120, 20)])
 	}
 
 
