@@ -104,7 +104,7 @@ var ViewModel = function(init) {
 		for(var i = 0; i < self.formAnswers().length; i++) {
 			sum += self.formAnswers()[i].answer();
 		}
-		return sum;
+		return 50 - sum;
 	}
 
 	self.goToActivity = function() {
