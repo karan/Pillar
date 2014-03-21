@@ -226,11 +226,11 @@
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/css/images/icons-svg/bullets-white.svg \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/css/images/icons-svg/arrow-r-black.svg \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/js/knockout-3.1.0.js \
-/home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/js/chart.js \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/js/model.js \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/js/index.js \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/js/jquery.mobile-1.4.2.min.js \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/js/viewmodel.js \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/js/jquery-2.1.0.min.js \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/js/jquery.mobile-1.4.2.min.map \
+/home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/js/jcanvas.min.js \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/ant-build/AndroidManifest.xml \
