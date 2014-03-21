@@ -116,7 +116,7 @@ var ViewModel = function(init) {
 	var calculateScore = function() {
 		var sum = 0;
 		for(var i = 0; i < self.formAnswers().length; i++) {
-			sum += self.formAnswers()[i].answer();
+			sum += parseInt(self.formAnswers()[i].answer());
 		}
 		return 50 - sum;
 	}
@@ -170,7 +170,7 @@ var ViewModel = function(init) {
 	self.submitAnswers = function() {
 		var score = calculateScore();
 		$.post(app.server + '/addscore', {'score' : score}, function(data) {
-			self.dataPoints.push(new DataPoint(new Date().now(), score));
+			self.dataPoints.push(new DataPoint(new Date().toString(), score));
 			$("#record-page-link").removeClass("ui-btn-active");
 			$("#record-page-link").removeClass("ui-state-persist");
 			resetForm();
