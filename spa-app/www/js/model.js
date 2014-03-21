@@ -15,13 +15,40 @@ var Chart = function(canvas, data) {
 	brush.attr('width', brush.width());
 	brush.attr('height', brush.height());
 
-	var axes_padding = 50;
+	var padding = 60;
 
 	var beginning = data[0].timeStamp;
 	var end = data[data.length - 1].timeStamp;
 	var span = end - beginning;
-	var barWidth = (brush.width() - axes_padding)/ data.length;
+	var barWidth = (brush.width() - 2 * padding)/ data.length;
 
+	brush.drawLine({
+		  strokeStyle: '#000',
+		  strokeWidth: 2,
+		  x1: padding, y1: 1.5 * padding,
+		  x2: padding, y2: brush.height() - padding,
+	});
+
+	brush.drawLine({
+		  strokeStyle: '#000',
+		  strokeWidth: 2,
+		  x1: 1.5 * padding, y1: brush.height() - padding + padding / 2,
+		  x2: brush.width() - padding, y2: brush.height() - padding + padding / 2,
+	});
+
+	brush.drawEllipse({
+		  fillStyle: '#ABFF9F',
+		  x: padding, 
+		  y: brush.height() - 0.5 * padding,
+		  width: 40, height: 40
+	});
+
+	brush.drawEllipse({
+		  fillStyle: '#ABFF9F',
+		  x: padding, 
+		  y: padding,
+		  width: 40, height: 40
+	});
 
 	var lineObj = {
 		  strokeStyle: '#FFF',
@@ -32,10 +59,10 @@ var Chart = function(canvas, data) {
 
 	var drawBar = function(index, score, maxScore) {
 		console.log("drawing");
-		var x = axes_padding + barWidth / 2 + index * barWidth;
+		var x = padding + barWidth / 2 + index * barWidth;
 		var w = barWidth - 2 * barWidth / 10;
-		var h = score * (brush.height() - axes_padding - axes_padding / 2)/ maxScore
-		var y = brush.height() - h / 2 - axes_padding;
+		var h = score * (brush.height() - padding - padding / 2)/ maxScore
+		var y = brush.height() - h / 2 - padding;
 
 
 		console.log(x);
