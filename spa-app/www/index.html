@@ -25,7 +25,7 @@
             <div data-role="ui-content" id="record-page">
                 <div id="question">
                     <h1 data-bind="text: currentQuestion().prompt"></h1>
-                    <input id="answer" type="range" name="slider-fill" id="slider-fill" value="5" min="0" max="10" data-highlight="true" data-bind="value: currentQuestion().answer, slider: currentQuestion().answer" />
+                    <input id="answer" type="range" name="slider-fill" id="slider-fill" value="2" min="0" max="5" data-highlight="true" data-bind="value: currentQuestion().answer, slider: currentQuestion().answer" />
                     <div class="ui-grid-a">
                         <div class="ui-block-a"><a data-role="button" data-bind="click: previousQuestion, visible: showPrevious()" data-inline="true" data-inline="true" data-theme="a">Previous</a></div>
                         <div class="ui-block-b"><a data-role="button" data-bind="click: nextQuestion, visible: showNext()" data-inline="true" data-theme="b">Next</a></div>     
@@ -36,9 +36,9 @@
             <div id="footing" data-role="footer" data-position="fixed" data-tap-toggle="false">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="#me-page" data-bind="click: goToMe" class="ui-btn-active ui-state-persist">Me</a></li>
-                        <li><a href="#activity-page" data-bind="click: goToActivity">Activity</a></li>
-                        <li><a href="#record-page" data-bind="click: goToForms">Record</a></li>
+                        <li><a id="me-page-link" href="#me-page" data-bind="click: goToMe" class="ui-btn-active ui-state-persist">Me</a></li>
+                        <li><a id="activity-page-link" href="#activity-page" data-bind="click: goToActivity">Activity</a></li>
+                        <li><a id="record-page-link" href="#record-page" data-bind="click: goToForms">Record</a></li>
                     </ul>
                 </div>
             </div>
