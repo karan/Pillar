@@ -41,6 +41,10 @@ var ViewModel = function(init) {
 	};
 
 	self.nextQuestion = function() {
+		self.questionNumber(self.questionNumber() + 1);
+	}
+
+	self.submitAnswers = function() {
 
 	}
 
