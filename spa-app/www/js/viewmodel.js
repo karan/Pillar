@@ -47,8 +47,9 @@ var ViewModel = function(init) {
 		$("#graph").css({'width' : w, 'height' : h});
 	    $("#graph").attr('width', w);
 	    $("#graph").attr('height', h);
+	    var range = parseInt($("#time-selector :radio:checked").val());
 	    //user self.dataPoints here
-	    new Chart("#graph", self.dataPoints);
+	    new Chart("#graph", self.dataPoints, range);
 	}
 
 	var resetForm = function() {
