@@ -46,16 +46,23 @@ exports.signup = function(req, res){
  * Sign in a user
  */
 exports.signin = function(req, res) {
-    console.log(req.body);
     var username = req.body.username;
 
     console.log('signing in ' + username);
 
     User.findOne( {username: username}, function(err, user) {
-        console.log(user);
-        res.json({
+        if (!user) {
+            res.json({
+                    'response': 'FAIL',
+                    'errors': ['User not found']
+                });
+        } else {
+            console.log(user);
+            // successful registration
+            res.json({
                 'response': 'OK',
                 'user': user
             });
+        }
     });
 };

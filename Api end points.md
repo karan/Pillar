@@ -50,3 +50,12 @@ Example response:
         }
     }
 
+Or in case user not found:
+
+    {
+        "response": "FAIL",
+        "errors": [
+            "User not found"
+        ]
+    }
+
