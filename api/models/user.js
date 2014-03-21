@@ -4,7 +4,7 @@
 
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema, // Each schema maps to a MongoDB collection
-    Constants = require('../config/constants');
+    Score = require('./score.js');
 /*
     Field validators
 */
@@ -19,7 +19,8 @@ var userSchema = new Schema({
     username: {
         type: String,
         unique: true
-    }
+    },
+    scores: [Score]
 });
 
 module.exports = mongoose.model('User', userSchema);

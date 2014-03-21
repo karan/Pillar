@@ -59,3 +59,31 @@ Or in case user not found:
         ]
     }
 
+#### Add a score
+
+`/addscore`
+
+Form needed:
+
+    score: the new score to add
+
+Example response:
+
+    {
+        "response": "OK",
+        "user": {
+            "__v": 0,
+            "username": "xyz3",
+            "_id": "532d2b7106c843159920de87",
+            "created_at": "2014-03-22T06:19:29.956Z"
+        }
+    }
+
+Or in case user not found:
+
+    {
+        "response": "FAIL",
+        "errors": [
+            "User not found"
+        ]
+    }

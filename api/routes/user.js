@@ -58,6 +58,8 @@ exports.signin = function(req, res) {
                 });
         } else {
             console.log(user);
+            // save the user in sessions to be retrieved later
+            req.session.user = user;   
             // successful registration
             res.json({
                 'response': 'OK',
@@ -66,3 +68,10 @@ exports.signin = function(req, res) {
         }
     });
 };
+
+/*
+ * Add a new score for the logged in user.
+ */
+exports.addscore = function(req, res) {
+    console.log(req.session.user);
+}
