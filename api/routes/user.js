@@ -73,5 +73,24 @@ exports.signin = function(req, res) {
  * Add a new score for the logged in user.
  */
 exports.addscore = function(req, res) {
-    console.log(req.session.user);
-}
+    // var score = new Score({
+    //     'score': +req.body.score // cast to int
+    // });
+
+    // console.log(score);
+
+    User.update(
+        {'username': req.session.user.username},
+        { $push: { 
+            scores: {'score': +req.body.score} 
+        } }, 
+        function(err) {
+        if (err) console.log(err);;
+        User.findOne({'username': req.session.user.username}, function(err, user) {
+            res.json({
+                'response': 'OK',
+                'user': user
+            });
+        });
+    });
+};
