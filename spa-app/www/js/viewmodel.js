@@ -170,6 +170,7 @@ var ViewModel = function(init) {
 	self.submitAnswers = function() {
 		var score = calculateScore();
 		$.post(app.server + '/addscore', {'score' : score}, function(data) {
+			self.dataPoints.push(new DataPoint(new Date().now(), score));
 			$("#record-page-link").removeClass("ui-btn-active");
 			$("#record-page-link").removeClass("ui-state-persist");
 			resetForm();
