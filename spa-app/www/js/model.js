@@ -20,24 +20,48 @@ var Chart = function(canvas, data) {
 	var end = data[data.length - 1].timeStamp;
 	var span = end - beginning;
 	var barWidth = brush.width() / data.length;
-	console.log(barWidth)
+
+	var lineObj = {
+		  strokeStyle: '#000',
+		  strokeWidth: 6,
+		  rounded: true
+	};
 
 	var drawBar = function(index, score, maxScore) {
 		console.log("drawing");
-		var x = index * barWidth;
+		var x = barWidth / 2 + index * barWidth;
+		var y = brush.height();
+		var w = barWidth - 2 * barWidth / 10;
+		var h = score * (brush.height() / maxScore)
+
 		console.log(x);
 		brush.drawRect({
-			  fillStyle: '#000',
-			  x: index * barWidth, 
-			  y: brush.height(),
-			  width: barWidth,
-			  height: score * (brush.height() / maxScore)
+			  fillStyle: '#ABFF9F',
+			  x: x, 
+			  y: y,
+			  width: w,
+			  height: h,
+			  cornerRadius: 10
 		});
+
+		brush.drawEllipse({
+			  fillStyle: '#000',
+			  x: x, 
+			  y: y - h/2,
+			  width: 25, height: 25
+		});
+
+		lineObj['x' + (index + 1)] = x;
+		lineObj['y' + (index + 1)] = y - h/2;
 	};
+
+
 
 	for(i = 0; i < data.length; i++) {
 		drawBar(i, data[i].score, 50);
 	}
+
+	brush.drawLine(lineObj);
 
 
 	

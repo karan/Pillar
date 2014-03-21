@@ -13,7 +13,7 @@ var ViewModel = function(init) {
 		$("#graph").css({'width' : w, 'height' : h});
 	    $("#graph").attr('width', w);
 	    $("#graph").attr('height', h);
-	    new Chart("#graph", [new DataPoint(120120, 10), new DataPoint(120303, 20), new DataPoint(120403, 30), new DataPoint(120503, 40), new DataPoint(120603, 50)]);
+	    new Chart("#graph", [new DataPoint(120120, 10), new DataPoint(120303, 40), new DataPoint(120403, 30), new DataPoint(120503, 20), new DataPoint(120603, 50)]);
 	}
 
 	var loadVM = function(data) {
