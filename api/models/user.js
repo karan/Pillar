@@ -3,10 +3,8 @@
 */
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema; // Each schema maps to a MongoDB collection
-/*
-    Field validators
-*/
+    Schema = mongoose.Schema,
+    Message = require('./message.js'); // Each schema maps to a MongoDB collection
 
 // For any user
 var userSchema = new Schema({
