@@ -10,13 +10,15 @@ var DataPoint = function(stamp, value) {
 }
 
 var Chart = function(canvas, data, timeFrame) {
+	if(data.length == 0) {
+		return;
+	}
 	//timeframe == 1 if last week, 2 if last month, 3 if last year
 
 	//out comes drawing on canvas
 	var brush = $(canvas);
 	brush.attr('width', brush.width());
 	brush.attr('height', brush.height());
-
 	var padding = brush.width() / 25;
 
 	var beginning = data[0].timeStamp;
@@ -111,12 +113,13 @@ var Chart = function(canvas, data, timeFrame) {
 		});
 	};
 
-
 	for(i = 0; i < data.length; i++) {
 		drawBar(i, data[i].score, 50);
 	}
-
 	brush.addLayer(lineObj);
+
+
+
 
 	brush.drawLayers();
 
