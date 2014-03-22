@@ -30,6 +30,7 @@ var ViewModel = function(init) {
 	self.allmessages = new ko.observableArray();
 
 	self.currentMessage = new ko.observable('');
+	self.currentMessageID = new ko.observable('');
 	self.currentReplies = new ko.observableArray();
 	self.dataPoints = [];
 	self.prayer = new ko.observable('');
@@ -240,6 +241,27 @@ var ViewModel = function(init) {
 
 	self.sendSupport = function() {
 		console.log(self.currentMessage());
+		if(self.toggleReplyMessage()) {
+			$.post(app.server + '/sendmessage', {'messageID' : self.currentMessageID(), 'message' : $("#reply-message").val()}, function(data) {
+				$("#reply-message").val('');
+				self.toggleReplyMessage(false);
+				$("#me-page-link").removeClass("ui-btn-active");
+				$("#me-page-link").removeClass("ui-state-persist");
+				$("#activity-page-link").addClass("ui-btn-active");
+				$("#activity-page-link").addClass("ui-state-persist");
+			}, "json");
+		}
+		if(self.showPrayer()) {
+			$.post(app.server + '/sendmessage', {'messageID' : self.currentMessageID(), 'message' : self.prayer()}, function(data) {
+				self.prayer('');
+				self.showPrayer(false);
+				$("#me-page-link").removeClass("ui-btn-active");
+				$("#me-page-link").removeClass("ui-state-persist");
+				$("#activity-page-link").addClass("ui-btn-active");
+				$("#activity-page-link").addClass("ui-state-persist");
+			}, "json");
+		}
+		return true;
 	};
 
 	self.getInboxMessages = function() {
@@ -253,6 +275,7 @@ var ViewModel = function(init) {
 
 	self.goToMessage = function(message) {
 		var messageID = message._id;
+		self.currentMessageID(messageID);
 		$.getJSON(app.server + '/getmessage?messageID=' + messageID, function(data) {
 			self.currentReplies.removeAll(); 
 			self.currentMessage(data["message"]["message"]);
