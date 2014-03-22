@@ -37,6 +37,7 @@ var ViewModel = function(init) {
 	self.showPrayer = new ko.observable(false);
 	self.toggleReplyMessage = new ko.observable(false);
 	self.inboxMessages = new ko.observableArray();
+	self.showHotLine = new ko.observable(false);
 
 
 	self.rating = ko.computed(function() {
@@ -81,6 +82,7 @@ var ViewModel = function(init) {
 	};
 
 	var resetForm = function() {
+		self.showHotLine(false);
 		self.questionNumber(0);
 		for(var i = 0; i < self.formAnswers().length; i++) {
 			self.formAnswers()[i].answer(2);
@@ -148,6 +150,10 @@ var ViewModel = function(init) {
 			'prompt' : 'Have you suffered from reduced appetite?',
 			'answer' : new ko.observable(2)
 		});
+		self.formAnswers.push({
+			'prompt' : 'Have you had thoughts that life is not worth living?',
+			'answer' : new ko.observable(2)
+		});
 		self.drawChart();
 	};
 
@@ -197,11 +203,15 @@ var ViewModel = function(init) {
 		var score = calculateScore();
 		$.post(app.server + '/addscore', {'score' : score}, function(data) {
 			loadUser(data.user);
-			$("#record-page-link").removeClass("ui-btn-active");
-			$("#record-page-link").removeClass("ui-state-persist");
-			resetForm();
-			self.goToMe();
-			$('#me-page-link').click();
+			if(self.formAnswers()[9].answer() > 2) {
+				self.showHotLine(true);
+			} else {
+				$("#record-page-link").removeClass("ui-btn-active");
+				$("#record-page-link").removeClass("ui-state-persist");
+				resetForm();
+				self.goToMe();
+				$('#me-page-link').click();
+			}
 		}, "json");
 	};
 

@@ -18,6 +18,7 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        //$(document).ready(app.onDeviceReady);
     },
 
     // deviceready Event Handler
@@ -29,8 +30,10 @@ var app = {
         app.uuid = window.device.uuid;
         $.post(app.server + '/signup', {'username' : app.uuid}, function(signupData) {
             if(signupData.response == 'OK') {
-                app.viewModel = new ViewModel(signupData);
-                ko.applyBindings(app.viewModel);
+                $.post(app.server + '/signin', {'username' : app.uuid}, function(signinData) {
+                    app.viewModel = new ViewModel(signinData);
+                    ko.applyBindings(app.viewModel);
+                }, "json");
             } else {
                 $.post(app.server + '/signin', {'username' : app.uuid}, function(signinData) {
                     app.viewModel = new ViewModel(signinData);
