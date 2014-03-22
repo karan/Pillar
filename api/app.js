@@ -62,7 +62,10 @@ app.post('/addscore', middleware.requiresLogin, user.addscore);
 app.post('/addmessage', middleware.requiresLogin, user.addmessage);
 
 // get messages posted by logged in user
-app.get('/mymessages', middleware.requiresLogin, user.getMyMessages)
+app.get('/mymessages', middleware.requiresLogin, user.getMyMessages);
+
+// get all messages on the network except those by logged in user
+app.get('/allmessages', middleware.requiresLogin, user.getAllMessages);
 
 // Start the server
 http.createServer(app).listen(app.get('port'), function(){

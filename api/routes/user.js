@@ -132,6 +132,21 @@ exports.getMyMessages = function(req, res) {
         res.json({
                 'response': 'OK',
                 'messages': messages
-            });
-    })
+        });
+    });
+}
+
+/*
+ * get all messages on the network except those by logged in user
+ */
+exports.getAllMessages = function(req, res) {
+    Message.find().where('username').ne(req.session.user.username)
+                .sort('-created_at').exec(function(err, messages) {
+        if (err) console.log(err);
+
+        res.json({
+                'response': 'OK',
+                'messages': messages
+        });
+    });
 }

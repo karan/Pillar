@@ -114,3 +114,29 @@ Response:
             }
         ]
     }
+
+#### Get all messages on the network except those by logged in user, sortest by timestamp
+
+`GET /allmessages`
+
+Response:
+
+    {
+        "response": "OK",
+        "messages": [
+            {
+                "message": "o thou art",
+                "username": "tu",
+                "_id": "532d7f7b0ae6fd58f7dc129a",
+                "__v": 0,
+                "created_at": "2014-03-22T12:18:03.217Z"
+            },
+            {
+                "message": "\"hello world\"",
+                "username": "tu",
+                "_id": "532d7f710ae6fd58f7dc1299",
+                "__v": 0,
+                "created_at": "2014-03-22T12:17:53.550Z"
+            }
+        ]
+    }
