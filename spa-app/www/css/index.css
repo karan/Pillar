@@ -92,6 +92,14 @@ div.ui-slider {
     background-color:  #546975;
     border: none;
     color: white;
+    float: left;
+}
+
+#inbox-button {
+    background-color:  #546975;
+    border: none;
+    color: white;
+    float:right;
 }
 
 #action-buttons {

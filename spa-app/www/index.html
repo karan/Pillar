@@ -31,6 +31,7 @@
                 <div class="message-box">
                     <a id="support-button" class="ui-btn ui-icon-plus ui-btn-icon-top ui-btn-inline" href="#new-note-app">Get support</a>
                     <a id="inbox-button" class="ui-btn ui-icon-mail ui-btn-icon-top ui-btn-inline" href="#inbox-app">My Messages</a>
+                    <div style="clear:both;"></div>
                     <div data-bind="foreach: allmessages()" data-role="listview" data-inset="true">
                         <li>
                             <p class="white_font">posted: <span class="time-stamp" data-bind="text: $root.prettyDate(created_at)"></span></p>
@@ -97,6 +98,14 @@
         </div>
         <textarea autofocus required rows=10 maxlength=2000 placeholder="Anonymously share what's troubling you with others, and get support." name="message" id="newMessage"></textarea>
         <a data-role="button" data-bind="click: addMessage" data-rel="back" data-inline="true" data-theme="a">Submit</a>
+    </div>
+
+    <div id="inbox-app" class="app" data-role="page">
+        <div data-role="header" data-position="fixed">
+            <a data-rel="back" data-icon="delete">Close</a>
+            <h1>Inbox</h1>
+        </div>
+        <h1>messages go here</h1>
     </div>
 
     <script type="text/javascript" src="cordova.js"></script>
