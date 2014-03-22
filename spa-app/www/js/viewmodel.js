@@ -25,7 +25,7 @@ var ViewModel = function(init) {
 	};
 
 	self.drawChart = function() {
-		new Chart("#graph", [new DataPoint(120120, 20), new DataPoint(120120, 20)]);
+		new Chart("#graph", [new DataPoint(120120, 10), new DataPoint(120303, 20), new DataPoint(120403, 30), new DataPoint(120503, 40), new DataPoint(120603, 50)]);
 	}
 
 
