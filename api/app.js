@@ -11,8 +11,8 @@ var express = require('express'),       // the main ssjs framework
     http = require('http'),
     path = require('path'),             // for path manipulation
     middleware = require('./config/middleware.js'),
-    app = express(),                    // create an express app
-    RedisStore = require('connect-redis')(express); // for persistent sessions
+    app = express();                    // create an express app
+    //RedisStore = require('connect-redis')(express); // for persistent sessions
 
 var app = express();
 
@@ -35,12 +35,12 @@ app.configure(function(){
     // faux HTTP requests - PUT or DELETE
     app.use(express.methodOverride());
     app.use(express.session({ 
-        secret: 'ecoSecret',
-        store: new RedisStore({
-            host: 'localhost',
-            port: 6379,
-            db: 2
-        }),
+        secret: 'ecoSecret'
+        // store: new RedisStore({
+        //     host: 'localhost',
+        //     port: 6379,
+        //     db: 2
+        // }),
     }));
     // invokes the routes' callbacks
     app.use(app.router);
