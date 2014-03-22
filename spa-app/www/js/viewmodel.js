@@ -76,7 +76,7 @@ var ViewModel = function(init) {
 	    var range = parseInt($("#time-selector :radio:checked").val());
 	    //user self.dataPoints here
 	    new Chart("#graph", self.dataPoints, range);
-	}
+	};
 
 	var resetForm = function() {
 		self.questionNumber(0);
@@ -205,7 +205,7 @@ var ViewModel = function(init) {
 	self.addMessage = function() {
 		var message = $('#newMessage').val();
 		$.post(app.server + '/addmessage', {'message' : message}, function(data) {
-			self.allmessages.unshift(data.message);
+			//self.allmessages.unshift(data.message);
 			$("#me-page-link").removeClass("ui-btn-active");
 			$("#me-page-link").removeClass("ui-state-persist");
 			$("#activity-page-link").addClass("ui-btn-active");
