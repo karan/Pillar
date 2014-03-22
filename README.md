@@ -15,3 +15,7 @@ Install node.js dependencies
 Start the app
 
 `node app.js`
+
+Start mongo
+
+`mongod --dbpath data/`
