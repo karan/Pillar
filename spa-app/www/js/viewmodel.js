@@ -208,6 +208,7 @@ var ViewModel = function(init) {
 		var message = $('#newMessage').val();
 		$.post(app.server + '/addmessage', {'message' : message}, function(data) {
 			//self.allmessages.unshift(data.message);
+			$('#newMessage').val('');
 			$("#me-page-link").removeClass("ui-btn-active");
 			$("#me-page-link").removeClass("ui-state-persist");
 			$("#activity-page-link").addClass("ui-btn-active");
