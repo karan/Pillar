@@ -17,12 +17,6 @@ var Chart = function(canvas, data, timeFrame, sample) {
 
 	console.log(data);
 
-	if(sample) {
-		var opc = 0.5;
-	} else {
-		var opc = 1;
-	}
-
 	//out comes drawing on canvas
 	var brush = $(canvas);
 	brush.removeLayers();
@@ -36,6 +30,25 @@ var Chart = function(canvas, data, timeFrame, sample) {
 	var span = end - beginning;*/
 	var span = timeFrame;
 	var barWidth = (brush.width() - 2 * padding)/ numBars;
+
+	if(sample) {
+		var opc = 0.5;
+		brush.addLayer({
+			type: 'text',
+			name: 'hint',
+			strokeStyle: '#000',
+			strokeWidth: 2,
+			text: 'Start recording your mood to see your data here.',
+			x: padding + barWidth / 2,
+			y: 1.5 * padding,
+			fromCenter: false,
+			fontSize: barWidth / 8,
+			fontFamily: 'sans-serif'
+		});
+
+	} else {
+		var opc = 1;
+	}
 
 	var drawLegend = function() {
 		brush.addLayer({
@@ -135,7 +148,7 @@ var Chart = function(canvas, data, timeFrame, sample) {
 		  			layer: true,
 					name: 'date',
 					fillStyle: '#000000',
-					fontSize: barWidth / 8,
+					fontSize: Math.max(barWidth / 4, 20),
 					x: x,
 					y: y,
 					strokeWidth: 2,

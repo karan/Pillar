@@ -1,13 +1,23 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
-
 /*
     BLUE  #6ABBD8
     GREEN  #ABFF9F
     GREY   #546975
 */
-body {
-    font-family: 'Roboto Slab', sans-serif;
+
+@font-face {
+    font-family: comf;
+    src: url(Comfortaa_Regular.ttf);
 }
+
+
+body {
+    font-family: comf;
+}
+
+h1 {
+    text-shadow: none;
+}
+
 .ui-body-c, .ui-overlay-c, .ui-page {
     background: #6ABBD8;
 }
@@ -48,7 +58,6 @@ body > div.ui-page.ui-page-theme-a.ui-page-header-fixed.ui-page-footer-fixed.ui-
 }
 
 #questionPrompt {
-    font-family: 'Open Sans Condensed', helvetica, sans-serif;
     margin: 30px 0px 40px;
     text-shadow: none;
     width: 100%;
