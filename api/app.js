@@ -14,7 +14,6 @@ var express = require('express'),       // the main ssjs framework
     constants = require('./config/constants'),
     app = express();                     // create an express app
 
-
 var app = express();
 
 // all environments
