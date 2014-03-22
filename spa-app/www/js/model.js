@@ -75,12 +75,7 @@ var Chart = function(canvas, data) {
 			  height: h,
 			  cornerRadius: 10,
 
-			click: function(layer) {
-				    // Animate layer when touched
-				    $(this).animateLayer(layer, {
-				      fillStyle: '#ABFF9F',
-				    }, 250);
-			  },
+
 
 		});
 
