@@ -38,6 +38,10 @@ body {
     margin-bottom: 20px;
 }
 
+#message-app {
+    padding: 40px;
+}
+
 body > div.ui-page.ui-page-theme-a.ui-page-header-fixed.ui-page-footer-fixed.ui-page-active > div > div.contents.ui-tabs.ui-widget.ui-widget-content.ui-corner-all {
     padding: 15px 10px;
 }
@@ -59,8 +63,17 @@ body > div.ui-page.ui-page-theme-a.ui-page-header-fixed.ui-page-footer-fixed.ui-
     visibility: hidden;
 }
 
+#new-note-app {
+    color: "#546975";
+}
+
 .ui-slider-track {
     margin: 0 15px;
+}
+
+.message-box {
+    margin: 15px ;
+    padding: 20px !important;
 }
 
 div.ui-slider {
@@ -69,4 +82,17 @@ div.ui-slider {
 
 #question > div.ui-grid-a.ui-responsive.custom {
     margin: auto 40px;
+}
+
+.time-stamp {
+    color: white;
+}
+
+#support-button {
+    background-color:  #546975;
+    border: none;
+}
+
+#support {
+    color: white !important;
 }
