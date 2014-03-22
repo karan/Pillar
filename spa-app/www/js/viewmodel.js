@@ -203,12 +203,15 @@ var ViewModel = function(init) {
 		var score = calculateScore();
 		$.post(app.server + '/addscore', {'score' : score}, function(data) {
 			loadUser(data.user);
-			//if(self.)
-			$("#record-page-link").removeClass("ui-btn-active");
-			$("#record-page-link").removeClass("ui-state-persist");
-			resetForm();
-			self.goToMe();
-			$('#me-page-link').click();
+			if(self.formAnswers()[9].answer() > 2) {
+				self.showHotLine(true);
+			} else {
+				$("#record-page-link").removeClass("ui-btn-active");
+				$("#record-page-link").removeClass("ui-state-persist");
+				resetForm();
+				self.goToMe();
+				$('#me-page-link').click();
+			}
 		}, "json");
 	};
 
