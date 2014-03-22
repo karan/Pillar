@@ -49,6 +49,11 @@ body > div.ui-page.ui-page-theme-a.ui-page-header-fixed.ui-page-footer-fixed.ui-
     width: 100%;
     text-align: center;
 }
+#self-rating {
+    width: 100%;
+    text-align: center;
+    margin-top: 0;
+}
 
 #answer {
     visibility: hidden;
