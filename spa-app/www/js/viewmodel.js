@@ -126,6 +126,12 @@ var ViewModel = function(init) {
 		return 50 - sum;
 	}
 
+	self.prettyDate = function(data) {
+		var date = new Date(data);
+
+		return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+	};
+
 	self.goToActivity = function() {
 		if (!self.messagesRendered) {
 			// $.getJSON(app.server + '/allmessages', function(data) { 
@@ -200,13 +206,16 @@ var ViewModel = function(init) {
 	};
 
 	self.goToMessage = function(message) {
-
 		var messageID = message._id;
 		$.getJSON(app.server + '/getmessage?messageID=' + messageID, function(data) {
 			self.currentReplies.removeAll(); 
 			self.currentMessage(data["message"]["message"]);
 			for (var i=0; i<data["message"]["replies"].length; i++)
 				self.currentReplies.push(data["message"]["replies"][i]["message"]);
+			$("#me-page-link").removeClass("ui-btn-active");
+			$("#me-page-link").removeClass("ui-state-persist");
+			$("#activity-page-link").addClass("ui-btn-active");
+			$("#activity-page-link").addClass("ui-state-persist");
 		});
 		return true;
 	}
