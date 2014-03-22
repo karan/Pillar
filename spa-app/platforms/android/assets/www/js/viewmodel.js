@@ -241,7 +241,7 @@ var ViewModel = function(init) {
 
 	self.sendSupport = function() {
 		console.log(self.currentMessage());
-		if(self.toggleReplyMessage()) {
+		if(self.toggleReplyMessage() && $("#reply-message").val() != '') {
 			$.post(app.server + '/sendmessage', {'messageID' : self.currentMessageID(), 'message' : $("#reply-message").val()}, function(data) {
 				$("#reply-message").val('');
 				self.toggleReplyMessage(false);
@@ -251,7 +251,7 @@ var ViewModel = function(init) {
 				$("#activity-page-link").addClass("ui-state-persist");
 			}, "json");
 		}
-		if(self.showPrayer()) {
+		if(self.showPrayer() && self.prayer() != '') {
 			$.post(app.server + '/sendmessage', {'messageID' : self.currentMessageID(), 'message' : self.prayer()}, function(data) {
 				self.prayer('');
 				self.showPrayer(false);
