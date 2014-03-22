@@ -49,57 +49,64 @@ var ViewModel = function(init) {
 	    new Chart("#graph", [new DataPoint(120120, 10), new DataPoint(120303, 40), new DataPoint(120403, 30), new DataPoint(120503, 20), new DataPoint(120603, 50), new DataPoint(120703, 35)]);
 	}
 
-	var loadVM = function(data) {
-		self.drawChart();
-		self.user = data.user;
+	var resetForm = function() {
+		self.questionNumber(0);
+		self.formAnswers.removeAll();
 		self.formAnswers.push({
-			'prompt' : 'question one...',
-			'answer' : new ko.observable(5)
+			'prompt' : 'Have you felt low in spirits or sad?',
+			'answer' : new ko.observable(2)
 		});
 		self.formAnswers.push({
-			'prompt' : 'question two...',
-			'answer' : new ko.observable(5)
+			'prompt' : 'Have you lost interest in your daily activities?',
+			'answer' : new ko.observable(2)
 		});
 		self.formAnswers.push({
-			'prompt' : 'question three...',
-			'answer' : new ko.observable(5)
+			'prompt' : 'Have you felt lacking in energy and strength?',
+			'answer' : new ko.observable(2)
 		});
 		self.formAnswers.push({
-			'prompt' : 'question four...',
+			'prompt' : 'Have you felt less self-confident?',
+			'answer' : new ko.observable(2)
+		});
+		/*
+		self.formAnswers.push({
+			'prompt' : ' Have you felt that life wasn\'t worth living?',
 			'answer' : new ko.observable(5)
+		});*/
+		self.formAnswers.push({
+			'prompt' : 'Have you had difficulty in concentrating?',
+			'answer' : new ko.observable(2)
 		});
 		self.formAnswers.push({
-			'prompt' : 'question five...',
-			'answer' : new ko.observable(5)
+			'prompt' : 'Have you felt very restless?',
+			'answer' : new ko.observable(2)
 		});
 		self.formAnswers.push({
-			'prompt' : 'question six...',
-			'answer' : new ko.observable(5)
+			'prompt' : 'Have you felt subdued?',
+			'answer' : new ko.observable(2)
 		});
 		self.formAnswers.push({
-			'prompt' : 'question seven...',
-			'answer' : new ko.observable(5)
+			'prompt' : 'Have you had trouble sleeping at night?',
+			'answer' : new ko.observable(2)
 		});
 		self.formAnswers.push({
-			'prompt' : 'question eight...',
-			'answer' : new ko.observable(5)
-		});
-		self.formAnswers.push({
-			'prompt' : 'question nine...',
-			'answer' : new ko.observable(5)
-		});
-		self.formAnswers.push({
-			'prompt' : 'question ten...',
-			'answer' : new ko.observable(5)
-		});
-		self.formAnswers.push({
-			'prompt' : 'question eleven...',
-			'answer' : new ko.observable(5)
+			'prompt' : 'Have you suffered from reduced appetite?',
+			'answer' : new ko.observable(2)
 		});
 	};
 
+	var loadVM = function(data) {
+		self.drawChart();
+		self.user = data.user;
+		resetForm();
+	};
+
 	var calculateScore = function() {
-		return 0;
+		var sum = 0;
+		for(var i = 0; i < self.formAnswers().length; i++) {
+			sum += self.formAnswers()[i].answer();
+		}
+		return sum;
 	}
 
 	self.goToActivity = function() {
@@ -148,10 +155,17 @@ var ViewModel = function(init) {
 	};
 
 	self.submitAnswers = function() {
-		/*var score = calculateScore();
-		$.post(app.server + '/addscore', {'score' : score}, function() {
-
-		}, "json");*/
+		var score = calculateScore();
+		$.post(app.server + '/addscore', {'score' : score}, function(data) {
+			self.goToMe();
+			$("#record-page-link").removeClass("ui-btn-active");
+			$("#record-page-link").removeClass("ui-state-persist");
+			$("#me-page-link").addClass("ui-btn-active");
+			$("#me-page-link").addClass("ui-state-persist");
+			$("#record-page").hide();
+			$("#me-page").show();
+			resetForm();
+		}, "json");
 	};
 
 	self.addMessage = function() {
