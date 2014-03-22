@@ -28,7 +28,7 @@
             <div data-role="ui-content" id="record-page">
                 <div id="question">
                     <h1 data-bind="text: currentQuestion().prompt"></h1>
-                    <input id="answer" type="range" name="slider-fill" id="slider-fill" value="2" min="0" max="5" data-highlight="true" data-bind="value: currentQuestion().answer, slider: currentQuestion().answer" />
+                    <input id="answer" type="range" name="slider-fill" id="slider-fill" value="2" min="1" max="5" data-highlight="true" data-bind="value: currentQuestion().answer, slider: currentQuestion().answer" />
                     <div class="ui-grid-a">
                         <div class="ui-block-a"><a data-role="button" data-bind="click: previousQuestion, visible: showPrevious()" data-inline="true" data-inline="true" data-theme="a">Previous</a></div>
                         <div class="ui-block-b"><a data-role="button" data-bind="click: nextQuestion, visible: showNext()" data-inline="true" data-theme="b">Next</a></div>     
@@ -47,7 +47,7 @@
             </div>
         </div>
     </div>
-    <!--<script type="text/javascript" src="cordova.js"></script>-->
+    <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
     <script type="text/javascript" src="js/knockout-3.1.0.js"></script>
     <script type="text/javascript" src="js/jquery.mobile-1.4.2.min.js"></script>

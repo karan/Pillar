@@ -8,6 +8,13 @@
     background: #6ABBD8;
 }
 
+.full-width-slider input {
+    display: none;
+}
+
+.full-width-slider .ui-slider-track {
+    margin-left: 15px;
+}
 
 #graph {
     width: 100%;
