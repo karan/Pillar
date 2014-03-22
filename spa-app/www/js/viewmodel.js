@@ -48,7 +48,7 @@ var ViewModel = function(init) {
 	    $("#graph").attr('width', w);
 	    $("#graph").attr('height', h);
 	    //user self.dataPoints here
-	    new Chart("#graph", self.dataPoints);
+	    new Chart("#graph", [new DataPoint(1, 30)]);
 	}
 
 	var resetForm = function() {

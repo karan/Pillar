@@ -21,10 +21,11 @@ var Chart = function(canvas, data, timeFrame) {
 	brush.attr('height', brush.height());
 	var padding = brush.width() / 25;
 
+	var numBars = Math.max(5, data.length);
 	var beginning = data[0].timeStamp;
 	var end = data[data.length - 1].timeStamp;
 	var span = end - beginning;
-	var barWidth = (brush.width() - 2 * padding)/ data.length;
+	var barWidth = (brush.width() - 2 * padding)/ numBars;
 
 	var drawLegend = function() {
 		brush.addLayer({
@@ -75,24 +76,35 @@ var Chart = function(canvas, data, timeFrame) {
 		var w = barWidth - 2 * barWidth / 10;
 		var h = score * (brush.height() - padding - padding / 2)/ maxScore
 		var y = brush.height() - h / 2 - padding;
+		var white = true;
+
+		var toggle = function(layer) {
+		{
+			  if(white) {
+			  		$(this).animateLayer(layer, {
+			  			fillStyle: '#ABFF9F',
+			  		}, 250);
+			  	} else {
+			  		$(this).animateLayer(layer, {
+			  			fillStyle: '#FFFFFF',
+			  		}, 250);
+			  	}
+			  	brush.drawLayers();
+			  }
+			  white = !white;
+		}
 
 		// Create and draw a rectangle layer
 		brush.addLayer({
 			type: 'rectangle',
 			  layer: true,
 			  name: 'bar' + index,
-			  fillStyle: '#FFF',
+			  fillStyle: '#FFFFFF',
 			  x: x, y: y,
 			  width: w, height: h,
 			  cornerRadius: 10,
-			  data: {
-			  	selected: false,
-			  },
 
-			  click: function(layer) {
-			  	console.log("clicked")
-			  	brush.drawLayers();
-			  }
+			  click: toggle
 		});
 
 		drawPoint(x, y, h, barWidth);
@@ -116,6 +128,7 @@ var Chart = function(canvas, data, timeFrame) {
 	for(i = 0; i < data.length; i++) {
 		drawBar(i, data[i].score, 50);
 	}
+
 	brush.addLayer(lineObj);
 
 
