@@ -3,8 +3,7 @@
 */
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema, // Each schema maps to a MongoDB collection
-    Score = require('./score.js');
+    Schema = mongoose.Schema; // Each schema maps to a MongoDB collection
 /*
     Field validators
 */
@@ -20,7 +19,10 @@ var userSchema = new Schema({
         type: String,
         unique: true
     },
-    scores: [Score]
+    scores: [{ 
+        score: Number,
+        timestamp: { type: Date, default: Date.now },
+    }]
 });
 
 module.exports = mongoose.model('User', userSchema);
