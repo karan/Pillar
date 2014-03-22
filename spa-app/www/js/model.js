@@ -25,28 +25,32 @@ var Chart = function(canvas, data, timeFrame) {
 	var barWidth = (brush.width() - 2 * padding)/ data.length;
 
 	var drawLegend = function() {
-		brush.drawLine({
+		brush.addLayer({
+			type: 'line',
 			  strokeStyle: '#000',
 			  strokeWidth: 2,
 			  x1: padding, y1: 1.5 * padding,
 			  x2: padding, y2: brush.height() - padding,
 		});
 
-		brush.drawLine({
+		brush.addLayer({
+			type: 'line',
 			  strokeStyle: '#000',
 			  strokeWidth: 2,
 			  x1: 1.5 * padding, y1: brush.height() - padding + padding / 2,
 			  x2: brush.width() - padding, y2: brush.height() - padding + padding / 2,
 		});
 
-		brush.drawEllipse({
+		brush.addLayer({
+			type: 'ellipse',
 			  fillStyle: '#ABFF9F',
 			  x: padding, 
 			  y: brush.height() - 0.5 * padding,
 			  width: barWidth / 6, height: barWidth / 6
 		});
 
-		brush.drawEllipse({
+		brush.addLayer({
+			type: 'ellipse',
 			  fillStyle: '#ABFF9F',
 			  x: padding, 
 			  y: padding,
@@ -57,6 +61,7 @@ var Chart = function(canvas, data, timeFrame) {
 	drawLegend();
 
 	var lineObj = {
+		type: 'line',
 		  strokeStyle: '#FFF',
 		  strokeWidth: 6,
 		  rounded: true,
@@ -64,43 +69,57 @@ var Chart = function(canvas, data, timeFrame) {
 	};
 
 	var drawBar = function(index, score, maxScore) {
-		console.log("drawing");
 		var x = padding + barWidth / 2 + index * barWidth;
 		var w = barWidth - 2 * barWidth / 10;
 		var h = score * (brush.height() - padding - padding / 2)/ maxScore
 		var y = brush.height() - h / 2 - padding;
 
-		brush.drawRect({
-			layer: true,
-			  fillStyle: 'FFF',
-			  x: x, 
-			  y: y,
-			  width: w,
-			  height: h,
+		// Create and draw a rectangle layer
+		brush.addLayer({
+			type: 'rectangle',
+			  layer: true,
+			  name: 'bar' + index,
+			  fillStyle: '#FFF',
+			  x: x, y: y,
+			  width: w, height: h,
 			  cornerRadius: 10,
+			  data: {
+			  	selected: false,
+			  },
 
-
-
+			  click: function(layer) {
+			  	console.log("clicked")
+			  	brush.drawLayers();
+			  }
 		});
 
-		brush.drawEllipse({
+		drawPoint(x, y, h, barWidth);
+
+		lineObj['x' + (index + 1)] = x;
+		lineObj['y' + (index + 1)] = y - h/2;
+
+
+	};
+
+	var drawPoint = function(x, y, h, barWidth) {
+		brush.addLayer({
+			type: 'ellipse',
 			  fillStyle: '#000',
 			  x: x, 
 			  y: y - h/2,
 			  width: barWidth / 8, height: barWidth / 8
 		});
-
-		lineObj['x' + (index + 1)] = x;
-		lineObj['y' + (index + 1)] = y - h/2;
 	};
-
 
 
 	for(i = 0; i < data.length; i++) {
 		drawBar(i, data[i].score, 50);
 	}
 
-	brush.drawLine(lineObj);
+	brush.addLayer(lineObj);
+
+	brush.drawLayers();
+
 
 
 	
