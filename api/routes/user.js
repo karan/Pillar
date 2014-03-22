@@ -51,7 +51,11 @@ exports.signin = function(req, res) {
 
     console.log('signing in ' + username);
 
-    User.findOne( {'username': username}, function(err, user) {
+    User.findOne( {username: username}, function(err, user) {
         console.log(user);
+        res.json({
+                'response': 'OK',
+                'user': user
+            });
     });
 };
