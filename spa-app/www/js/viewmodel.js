@@ -219,8 +219,9 @@ var ViewModel = function(init) {
 		var message = $('#newMessage').val();
 		$.post(app.server + '/addmessage', {'message' : message}, function(data) {
 			console.log(data);
-			document.location.href = "#activity-page";
 		}, "json");
+
+		return true;
 	};
 
 	self.generatePrayer = function() {
