@@ -22,9 +22,10 @@ var Chart = function(canvas, data) {
 	var barWidth = brush.width() / data.length;
 
 	var lineObj = {
-		  strokeStyle: '#000',
+		  strokeStyle: '#FFF',
 		  strokeWidth: 6,
-		  rounded: true
+		  rounded: true,
+		  opacity: 0.3
 	};
 
 	var drawBar = function(index, score, maxScore) {
@@ -36,12 +37,17 @@ var Chart = function(canvas, data) {
 
 		console.log(x);
 		brush.drawRect({
-			  fillStyle: '#ABFF9F',
+			  fillStyle: 'FFF',
 			  x: x, 
 			  y: y,
 			  width: w,
 			  height: h,
-			  cornerRadius: 10
+			  cornerRadius: 10,
+			  click: function(layer) {
+			  	$(this).animateLayer(0, {
+			  		fillStyle: '#ABFF9F'
+			  	});
+			  }
 		});
 
 		brush.drawEllipse({
