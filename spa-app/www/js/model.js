@@ -9,19 +9,52 @@ var DataPoint = function(stamp, value) {
 	};
 }
 
-var Chart = function(canvas, data) {
+var Chart = function(canvas, data, timeFrame) {
+	//timeframe == 1 if last week, 2 if last month, 3 if last year
+
 	//out comes drawing on canvas
 	var brush = $(canvas);
 	brush.attr('width', brush.width());
 	brush.attr('height', brush.height());
 
-	var axes_padding = 50;
+	var padding = brush.width() / 25;
 
 	var beginning = data[0].timeStamp;
 	var end = data[data.length - 1].timeStamp;
 	var span = end - beginning;
-	var barWidth = (brush.width() - axes_padding)/ data.length;
+	var barWidth = (brush.width() - 2 * padding)/ data.length;
 
+	var drawLegend = function() {
+		brush.drawLine({
+			  strokeStyle: '#000',
+			  strokeWidth: 2,
+			  x1: padding, y1: 1.5 * padding,
+			  x2: padding, y2: brush.height() - padding,
+		});
+
+		brush.drawLine({
+			  strokeStyle: '#000',
+			  strokeWidth: 2,
+			  x1: 1.5 * padding, y1: brush.height() - padding + padding / 2,
+			  x2: brush.width() - padding, y2: brush.height() - padding + padding / 2,
+		});
+
+		brush.drawEllipse({
+			  fillStyle: '#ABFF9F',
+			  x: padding, 
+			  y: brush.height() - 0.5 * padding,
+			  width: barWidth / 6, height: barWidth / 6
+		});
+
+		brush.drawEllipse({
+			  fillStyle: '#ABFF9F',
+			  x: padding, 
+			  y: padding,
+			  width: barWidth / 6, height: barWidth / 6
+		});
+	};
+
+	drawLegend();
 
 	var lineObj = {
 		  strokeStyle: '#FFF',
@@ -32,32 +65,29 @@ var Chart = function(canvas, data) {
 
 	var drawBar = function(index, score, maxScore) {
 		console.log("drawing");
-		var x = axes_padding + barWidth / 2 + index * barWidth;
+		var x = padding + barWidth / 2 + index * barWidth;
 		var w = barWidth - 2 * barWidth / 10;
-		var h = score * (brush.height() - axes_padding - axes_padding / 2)/ maxScore
-		var y = brush.height() - h / 2 - axes_padding;
+		var h = score * (brush.height() - padding - padding / 2)/ maxScore
+		var y = brush.height() - h / 2 - padding;
 
-
-		console.log(x);
 		brush.drawRect({
+			layer: true,
 			  fillStyle: 'FFF',
 			  x: x, 
 			  y: y,
 			  width: w,
 			  height: h,
 			  cornerRadius: 10,
-			  click: function(layer) {
-			  	$(this).animateLayer(0, {
-			  		fillStyle: '#ABFF9F'
-			  	});
-			  }
+
+
+
 		});
 
 		brush.drawEllipse({
 			  fillStyle: '#000',
 			  x: x, 
 			  y: y - h/2,
-			  width: 25, height: 25
+			  width: barWidth / 8, height: barWidth / 8
 		});
 
 		lineObj['x' + (index + 1)] = x;

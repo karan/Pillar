@@ -43,7 +43,7 @@ var ViewModel = function(init) {
 
 	var respondCanvas = function(){ 
 		var w = $(window).width();
-		var h = $(window).height() - $("#title").height() - $("#footing").height();
+		var h = $(window).height() - $("#title").height() - $("#footing").height() - 20;
 		$("#graph").css({'width' : w, 'height' : h});
 	    $("#graph").attr('width', w);
 	    $("#graph").attr('height', h);
@@ -51,6 +51,7 @@ var ViewModel = function(init) {
 	}
 
 	var resetForm = function() {
+		self.questionNumber(0);
 		for(var i = 0; i < self.formAnswers().length; i++) {
 			self.formAnswers()[i].answer(2);
 		}
@@ -162,14 +163,11 @@ var ViewModel = function(init) {
 	self.submitAnswers = function() {
 		var score = calculateScore();
 		$.post(app.server + '/addscore', {'score' : score}, function(data) {
-			self.goToMe();
 			$("#record-page-link").removeClass("ui-btn-active");
 			$("#record-page-link").removeClass("ui-state-persist");
-			$("#me-page-link").addClass("ui-btn-active");
-			$("#me-page-link").addClass("ui-state-persist");
-			$("#record-page").hide();
-			$("#me-page").show();
 			resetForm();
+			self.goToMe();
+			$('#me-page-link').click();
 		}, "json");
 	};
 
