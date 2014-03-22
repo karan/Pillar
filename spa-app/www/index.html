@@ -33,7 +33,7 @@
             <div data-role="ui-content" id="activity-page">
                 <p>Activity</p>
                 <div data-bind="foreach: allmessages()" data-role="listview" data-inset="true">
-                    <li><span data-bind="text: message"> </span></li>
+                    <li><a href="#message-app" data-bind="click: $parent.goToMessage"><span data-bind="text: message"> </span></a></li>
                 </div>
             </div>
             <div data-role="ui-content" id="record-page">
@@ -58,6 +58,16 @@
             </div>
         </div>
     </div>
+
+    <div id="message-app" class="app" data-role="page">
+        <div class="ui-body ui-body-a ui-corner-all">
+            <span data-bind="text: currentMessage()"></span>
+        </div>
+        <div class="ui-body ui-body-a ui-corner-all" data-bind="foreach: currentReplies()">
+            <p><span data-bind="text: $data"> </span></p>
+        </div>
+    </div>
+
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
     <script type="text/javascript" src="js/knockout-3.1.0.js"></script>
