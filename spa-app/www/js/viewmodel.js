@@ -202,10 +202,11 @@ var ViewModel = function(init) {
 	};
 
 	self.goToMessage = function(message) {
+
 		var messageID = message._id;
-		$.getJSON(app.server + '/getmessage?messageID=' + messageID, function(data) { 
-			self.currentMessage = data["message"]["message"];
-			console.log(self.currentMessage);
+		$.getJSON(app.server + '/getmessage?messageID=' + messageID, function(data) {
+			self.currentReplies.removeAll(); 
+			self.currentMessage(data["message"]["message"]);
 			for (var i=0; i<data["message"]["replies"].length; i++)
 				self.currentReplies.push(data["message"]["replies"][i]["message"]);
 		});
