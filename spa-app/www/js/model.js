@@ -9,7 +9,9 @@ var DataPoint = function(stamp, value) {
 	};
 }
 
-var Chart = function(canvas, data) {
+var Chart = function(canvas, data, timeFrame) {
+	//timeframe == 1 if last week, 2 if last month, 3 if last year
+
 	//out comes drawing on canvas
 	var brush = $(canvas);
 	brush.attr('width', brush.width());

@@ -4,6 +4,9 @@
     GREEN  #ABFF9F
     GREY   #546975
 */
+body {
+    font-family: 'Roboto Slab', sans-serif;
+}
 .ui-body-c, .ui-overlay-c, .ui-page {
     background: #6ABBD8;
 }
