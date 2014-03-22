@@ -111,6 +111,10 @@ div.ui-slider {
     padding: 15px;
 }
 
+.support-messages-inbox > li {
+    white-space:normal !important;
+}
+
 .message-box {
     padding: 15px;
 }
