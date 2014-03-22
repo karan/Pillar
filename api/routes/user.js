@@ -121,3 +121,17 @@ exports.addmessage = function(req, res) {
         }
     });
 }
+
+/*
+ * Get all messages posted by the logged in user
+ */
+exports.getMyMessages = function(req, res) {
+    Message.find( {'username': req.session.user.username}, function(err, messages) {
+        if (err) console.log(err);
+
+        res.json({
+                'response': 'OK',
+                'messages': messages
+            });
+    })
+}

@@ -61,6 +61,9 @@ app.post('/addscore', middleware.requiresLogin, user.addscore);
 // add a message (or post) that is sent out to many people
 app.post('/addmessage', middleware.requiresLogin, user.addmessage);
 
+// get messages posted by logged in user
+app.get('/mymessages', middleware.requiresLogin, user.getMyMessages)
+
 // Start the server
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
