@@ -28,16 +28,21 @@
                 </div>
             </div>
             <div data-role="ui-content" id="activity-page">
-                <p>Activity</p>
+                <button class="ui-btn ui-icon-plus ui-btn-icon-top ui-btn-inline">Note</button>
                 <div data-bind="foreach: allmessages()" data-role="listview" data-inset="true">
-                    <li><a href="#message-app" data-bind="click: $parent.goToMessage"><span data-bind="text: message"> </span></a></li>
+
+                    <li>
+                        <p>posted: <span data-bind="text: $root.prettyDate(created_at)"></span></p>
+                        <a href="#message-app" data-bind="click: $parent.goToMessage"><span data-bind="text: message"> </span></a>
+                    </li>
                 </div>
             </div>
             <div data-role="ui-content" id="record-page">
                 <div id="question">
                     <h1 id="questionPrompt" data-bind="text: currentQuestion().prompt"></h1>
-                    <input id="answer" type="range" name="slider-fill" id="slider-fill" value="2" min="1" max="5" data-highlight="true" data-bind="value: currentQuestion().answer, slider: currentQuestion().answer" />
-                    <div class="ui-grid-a ui-responsive">
+                    <input id="answer" type="range" name="slider-fill" id="slider-fill" value="2" min="1" max="5" data-highlight="true" data-bind="value: currentQuestion().answer, slider: currentQuestion().answer" data-show-value="true" data-popup-enabled="true" />
+
+                    <div class="ui-grid-a ui-responsive custom">
                         <div class="ui-block-a"><a data-role="button" data-bind="click: previousQuestion, visible: showPrevious()" data-inline="true" data-inline="true" data-theme="a" class="ui-btn ui-shadow ui-corner-all">Previous</a></div>
                         <div class="ui-block-b"><a data-role="button" data-bind="click: nextQuestion, visible: showNext()" data-inline="true" data-theme="b" class="ui-btn ui-shadow ui-corner-all">Next</a></div>     
                     </div>
@@ -57,6 +62,10 @@
     </div>
 
     <div id="message-app" class="app" data-role="page">
+        <div data-role="header" data-position="fixed">
+            <a data-rel="back" data-icon="delete">Cancel</a>
+            <h1>View Message</h1>
+        </div>
         <div class="ui-body ui-body-a ui-corner-all">
             <span data-bind="text: currentMessage()"></span>
         </div>

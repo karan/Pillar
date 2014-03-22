@@ -13,8 +13,6 @@ var Chart = function(canvas, data, timeFrame) {
 	if(data.length == 0) {
 		return;
 	}
-	console.log(timeFrame);
-	//timeframe == 1 if last week, 2 if last month, 3 if last year
 
 	//out comes drawing on canvas
 	var brush = $(canvas);
@@ -52,7 +50,7 @@ var Chart = function(canvas, data, timeFrame) {
 			  fillStyle: '#ABFF9F',
 			  x: padding, 
 			  y: brush.height() - 0.5 * padding,
-			  width: barWidth / 6, height: barWidth / 6
+			  width: brush.width() / 40, height: brush.width() / 40
 		});
 
 		brush.addLayer({
@@ -60,7 +58,7 @@ var Chart = function(canvas, data, timeFrame) {
 			  fillStyle: '#ABFF9F',
 			  x: padding, 
 			  y: padding,
-			  width: barWidth / 6, height: barWidth / 6
+			  width: brush.width() / 40, height: brush.width() / 40
 		});
 	};
 
@@ -74,28 +72,67 @@ var Chart = function(canvas, data, timeFrame) {
 		  opacity: 0.3
 	};
 
-	var drawBar = function(index, score, maxScore) {
+	var drawBar = function(index, score, maxScore, timeStamp) {
 		var x = padding + barWidth / 2 + index * barWidth;
 		var w = barWidth - 2 * barWidth / 10;
 		var h = score * (brush.height() - padding - padding / 2)/ maxScore
 		var y = brush.height() - h / 2 - padding;
-		var white = true;
 
-		var toggle = function(layer) {
-		{
-			  if(white) {
-			  		$(this).animateLayer(layer, {
-			  			fillStyle: '#ABFF9F',
-			  		}, 250);
-			  	} else {
-			  		$(this).animateLayer(layer, {
+		var date = new Date(timeStamp);
+
+		var turnWhite = function(layers) {
+			for(var i = 0; i < layers.length; i++) {
+				if(layers[i].name != null && layers[i].fillStyle != 'rgb(255,255,255)') {
+			  		brush.animateLayer(layers[i], {
 			  			fillStyle: '#FFFFFF',
-			  		}, 250);
-			  	}
-			  	brush.drawLayers();
-			  }
-			  white = !white;
-		}
+			  		}, 125);					
+				}
+			}
+		};
+		var toggle = function(layer) 
+		{
+
+			var layers = brush.getLayers();
+			if(layer.fillStyle != 'rgb(255,255,255)') {
+				var alreadyGreen = true;
+			} else {
+				var alreadyGreen = false;
+			}
+			turnWhite(layers);
+			if(!alreadyGreen) {
+				brush.removeLayer('label');
+				brush.removeLayer('date');
+		  		$(this).animateLayer(layer, {
+		  			fillStyle: '#ABFF9F',
+		  		}, 125);
+		  		brush.drawText({
+		  			layer: true,
+					name: 'label',
+					fillStyle: '#000000',
+					fontSize: '24pt',
+					x: x,
+					y: y - h / 2 - 40,
+					strokeWidth: 2,
+					text: "" + score
+				});
+				brush.drawText({
+		  			layer: true,
+					name: 'date',
+					fillStyle: '#000000',
+					fontSize: '14pt',
+					x: x,
+					y: y,
+					strokeWidth: 2,
+					text: (date.getMonth() + 1) + "/" + date.getDate()
+				});
+				brush.drawLayers();
+				
+			} else {
+				brush.removeLayer('label');
+				brush.removeLayer('date');
+			}
+
+		};
 
 		// Create and draw a rectangle layer
 		brush.addLayer({
@@ -144,7 +181,7 @@ var Chart = function(canvas, data, timeFrame) {
 	}
 
 	for(i = 0; i < rangeData.length; i++) {
-		drawBar(i, data[i].score, 50);
+		drawBar(i, data[i].score, 50, data[i].timeStamp);
 	}
 
 	brush.addLayer(lineObj);

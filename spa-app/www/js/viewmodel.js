@@ -33,6 +33,7 @@ var ViewModel = function(init) {
 	self.currentMessage = new ko.observable('');
 	self.currentReplies = new ko.observableArray();
 	self.dataPoints = [];
+	self.prayer = new ko.observable('');
 
     self.currentQuestion = ko.computed(function() {
         return self.formAnswers()[self.questionNumber()];
@@ -201,6 +202,20 @@ var ViewModel = function(init) {
 
 		}, "json"); */
 	};
+
+	self.generatePrayer = function() {
+
+	};
+
+	self.showAddMessage = function() {
+
+	};
+
+	self.showPrayer = function() {
+
+	};
+
+
 
 	self.drawChart = function() {
 		respondCanvas();
