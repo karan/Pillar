@@ -33,12 +33,10 @@ exports.signup = function(req, res){
                 });
             }
         } else {
-            req.logIn(user, function(err) {
-                // successful registration
-                res.json({
-                    'response': 'OK',
-                    'user': user
-                });
+            // successful registration
+            res.json({
+                'response': 'OK',
+                'user': user
             });
         }
     });

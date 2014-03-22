@@ -32,12 +32,4 @@ userSchema.pre('save', function(next) {
     next();
 });
 
-// compare two passwords for a match only for local strategy
-userSchema.methods.comparePassword = function(username, callback) {
-    bcrypt.compare(username, this.password, function(err, isMatch) {
-        if (err) return callback(err);
-        callback(null, isMatch);
-    });
-};
-
 module.exports = mongoose.model('User', userSchema);

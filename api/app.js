@@ -4,41 +4,45 @@
  */
 
 var express = require('express'),       // the main ssjs framework
-    http = require('http'),
-    routes = require('./routes'),       // by default, brings in routes/index.js
-    user = require('./routes/user'),    // all login for admin panel
-    path = require('path'),             // for pathn manipulation
     db = require('./config/db'),        // database connection
     passport = require('passport'),     // for user authentication
-    auth = require('./config/middlewares/authorization'), // helper methods for authentication
+    routes = require('./routes'),       // by default, brings in routes/index.js
+    user = require('./routes/user'),  // all login for admin panel
     constants = require('./config/constants'),
-    app = express();                     // create an express app
+    http = require('http'),
+    path = require('path'),             // for pathn manipulation
+    app = express();                    // create an express app
 
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(express.cookieParser('keyboard cat'));
-app.use(express.session());
-// initialize passport
-app.use(passport.initialize());
-// for persistent session logins otherwise each request would need credentials
-app.use(passport.session());
-// make variables available in all templates, provided that req.user is populated.
-app.use(function(req, res, next) {
-    res.locals.user = req.user;
-    res.locals.appName = constants.APP_NAME;
-    next();
+app.configure(function(){
+    // read port from .env file
+    app.set('port', 3000);
+    // locate the views folder
+    app.set('views', __dirname + '/views');
+    // we are using jade templating engine
+    app.set('view engine', 'jade');
+    // the favicon to use for our app
+    app.use(express.favicon(path.join(__dirname, 'public/images/favicon.ico')));
+    // watch network requests to express in realtime
+    app.use(express.logger('dev'));
+    // sign the cookies, so we know if they have been changed
+    app.use(express.cookieParser('keyboard cat'));
+    // allows to read values in a submitted form
+    app.use(express.bodyParser());
+    // faux HTTP requests - PUT or DELETE
+    app.use(express.methodOverride());
+    app.use(express.session({ secret: 'ecoSecret' }));
+    // initialize passport
+    app.use(passport.initialize());
+    // for persistent session logins otherwise each request would need credentials
+    app.use(passport.session());
+    // invokes the routes' callbacks
+    app.use(app.router);
+    // every file <file> in /public is served at example.com/<file>
+    app.use(express.static(path.join(__dirname, 'public')));
 });
-app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
@@ -46,22 +50,28 @@ if ('development' == app.get('env')) {
 }
 
 // serve the home
-//app.get('/', routes.index);
-
-// login the user
-app.post('/signin', passport.authenticate('local'), function (req, res) {
-    console.log('Login called');
-    req.json(req.user);
-});
+app.get('/', routes.index);
 
 // sign up a user
 app.post('/signup', user.signup); // signup page send a POST request here
 
-/*
-    load helper methods for passport.js
-    this is at the end to ensure everything has been loaded/required
-*/
-require('./config/pass.js')(passport);
+// login the user
+app.post('/signin', function(req, res, next) {
+    console.log(req.body);
+    passport.authenticate('local', function(err, user, info) {
+        console.log("after auth");
+        if (err) {
+            return next(err); // will generate a 500 error
+        }
+        // Generate a JSON response reflecting authentication status
+        if (!user) {
+            return res.send({ success : false, message : 'authentication failed' });
+        }
+        return res.send({ success : true, message : 'authentication succeeded' });
+    })(req, res, next);
+});
+
+require('./config/pass')(passport);
 
 // Start the server
 http.createServer(app).listen(app.get('port'), function(){
