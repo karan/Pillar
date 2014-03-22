@@ -15,11 +15,13 @@ var Chart = function(canvas, data) {
 	brush.attr('width', brush.width());
 	brush.attr('height', brush.height());
 
+	var axes_padding = 50;
 
 	var beginning = data[0].timeStamp;
 	var end = data[data.length - 1].timeStamp;
 	var span = end - beginning;
-	var barWidth = brush.width() / data.length;
+	var barWidth = (brush.width() - axes_padding)/ data.length;
+
 
 	var lineObj = {
 		  strokeStyle: '#FFF',
@@ -30,10 +32,11 @@ var Chart = function(canvas, data) {
 
 	var drawBar = function(index, score, maxScore) {
 		console.log("drawing");
-		var x = barWidth / 2 + index * barWidth;
-		var y = brush.height();
+		var x = axes_padding + barWidth / 2 + index * barWidth;
 		var w = barWidth - 2 * barWidth / 10;
-		var h = score * (brush.height() / maxScore)
+		var h = score * (brush.height() - axes_padding - axes_padding / 2)/ maxScore
+		var y = brush.height() - h / 2 - axes_padding;
+
 
 		console.log(x);
 		brush.drawRect({
