@@ -40,8 +40,8 @@
             <div data-role="ui-content" id="record-page">
                 <div id="question">
                     <h1 id="questionPrompt" data-bind="text: currentQuestion().prompt"></h1>
-                    <input id="answer" type="range" name="slider-fill" id="slider-fill" value="2" min="1" max="5" data-highlight="true" data-bind="value: currentQuestion().answer, slider: currentQuestion().answer" data-show-value="true" data-popup-enabled="true" />
-
+                    <h1 id="self-rating" data-bind="text: rating"></h1>
+                    <input id="answer" type="range" name="slider-fill" id="slider-fill" value="2" min="1" max="5" data-highlight="true" data-bind="value: currentQuestion().answer, slider: currentQuestion().answer" />
                     <div class="ui-grid-a ui-responsive custom">
                         <div class="ui-block-a"><a data-role="button" data-bind="click: previousQuestion, visible: showPrevious()" data-inline="true" data-inline="true" data-theme="a" class="ui-btn ui-shadow ui-corner-all">Previous</a></div>
                         <div class="ui-block-b"><a data-role="button" data-bind="click: nextQuestion, visible: showNext()" data-inline="true" data-theme="b" class="ui-btn ui-shadow ui-corner-all">Next</a></div>     
@@ -69,8 +69,11 @@
         <div class="ui-body ui-body-a ui-corner-all">
             <span data-bind="text: currentMessage()"></span>
         </div>
-        <a data-role="button" data-bind="click: addPrayer" data-inline="true" data-inline="true" data-theme="a">Prayer</a>
-        <a data-role="button" data-bind="click: addMessage" data-inline="true" data-theme="a">Message</a>
+        <a data-role="button" data-bind="click: generatePrayer" data-inline="true" data-inline="true" data-theme="a">Prayer</a>
+        <a data-role="button" data-bind="click: showAddMessage" data-inline="true" data-theme="a">Message</a>
+        <textarea></textarea>
+        <div class="ui-body ui-body-b prayer" data-bind="visible: showPrayer, text: prayer"></div>
+        <p>Support</p>
         <div class="ui-body ui-body-a ui-corner-all" data-bind="foreach: currentReplies()">
             <p><span data-bind="text: $data"> </span></p>
         </div>
