@@ -115,6 +115,10 @@ div.ui-slider {
     white-space:normal !important;
 }
 
+#hotline {
+    width: 100%;
+    text-align: center;
+}
 .message-box {
     padding: 15px;
 }
