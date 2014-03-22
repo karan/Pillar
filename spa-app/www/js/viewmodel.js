@@ -35,6 +35,7 @@ var ViewModel = function(init) {
 	self.prayer = new ko.observable('');
 	self.showPrayer = new ko.observable(false);
 	self.toggleReplyMessage = new ko.observable(false);
+	self.inboxMessages = new ko.observableArray();
 
 
 	self.rating = ko.computed(function() {
@@ -99,7 +100,7 @@ var ViewModel = function(init) {
 	};
 
 	var loadMessages = function() {
-		$.get(app.server + '/allmessages', function(data) {
+		$.getJSON(app.server + '/allmessages', function(data) {
 			for(var i = 0; i < data.messages.length; i++) {
 				self.allmessages.push(data.messages[i]);
 			}
@@ -109,6 +110,7 @@ var ViewModel = function(init) {
 	var loadVM = function(data) {
 		loadUser(data.user);
 		loadMessages();
+		self.getInboxMessages();
 		self.formAnswers.push({
 			'prompt' : 'Have you felt low in spirits or sad?',
 			'answer' : new ko.observable(2)
@@ -239,6 +241,15 @@ var ViewModel = function(init) {
 		console.log(self.currentMessage());
 	};
 
+	self.getInboxMessages = function() {
+		self.inboxMessages.removeAll();
+		$.getJSON(app.server + '/mymessages', function(data) {
+			for(var i = 0; i < data.messages.length; i++) {
+				self.inboxMessages.push(data.messages[i]);
+			}
+		});
+	};
+
 	self.goToMessage = function(message) {
 		var messageID = message._id;
 		$.getJSON(app.server + '/getmessage?messageID=' + messageID, function(data) {
@@ -253,7 +264,7 @@ var ViewModel = function(init) {
 			$("#activity-page-link").addClass("ui-state-persist");
 		});
 		return true;
-	}
+	};
 
 	$(window).resize(respondCanvas);
 	loadVM(init);
