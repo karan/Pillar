@@ -26,6 +26,7 @@ var ViewModel = function(init) {
 	self.formAnswers = new ko.observableArray();
 	self.questionNumber = new ko.observable(0);
 	self.answer = new ko.observable();
+	self.allmessages = new ko.observableArray();
 
     self.currentQuestion = ko.computed(function() {
         return self.formAnswers()[self.questionNumber()];
@@ -103,6 +104,25 @@ var ViewModel = function(init) {
 
 	self.goToActivity = function() {
 		$("#title > h1").text("Activity");
+		// $.getJSON(app.server + '/allmessages', function(data) { 
+		// 	console.log(data);
+		// 	for (var i=0; i<data["messages"].length; i++)
+		//     	self.allmessages.push(data["messages"][i]);
+		// });
+		self.allmessages.push({
+            "message": "o thou art",
+            "username": "tu",
+            "_id": "532d7f7b0ae6fd58f7dc129a",
+            "__v": 0,
+            "created_at": "2014-03-22T12:18:03.217Z"
+        });
+        self.allmessages.push({
+            "message": "\"hello world\"",
+            "username": "tu",
+            "_id": "532d7f710ae6fd58f7dc1299",
+            "__v": 0,
+            "created_at": "2014-03-22T12:17:53.550Z"
+        });
 		return true;
 	};
 
