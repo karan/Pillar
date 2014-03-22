@@ -68,7 +68,6 @@ var ViewModel = function(init) {
 	};
 
 	var loadVM = function(data) {
-		self.drawChart();
 		self.user = data.user;
 		self.dataPoints = loadPoints(data.user.scores || []);
 		self.formAnswers.push({
@@ -112,6 +111,7 @@ var ViewModel = function(init) {
 			'prompt' : 'Have you suffered from reduced appetite?',
 			'answer' : new ko.observable(2)
 		});
+		self.drawChart();
 	};
 
 	var calculateScore = function() {
