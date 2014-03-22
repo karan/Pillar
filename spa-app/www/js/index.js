@@ -1,12 +1,14 @@
+window.device = window.device || {
+    'uuid' : 'testuserstring'
+};
+
 var app = {
     viewModel : null,
-    server : 'http://localhost:3000',
-    uuid : 'window.device.uuid',
+    server : 'http://spa-api.herokuapp.com',
+    uuid : window.device.uuid,
     // Application Constructor
     initialize: function() {
-        //this.bindEvents();
-        app.onDeviceReady();
-
+        this.bindEvents();
     },
     // Bind Event Listeners
     //
@@ -14,6 +16,7 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         //document.addEventListener('deviceready', this.onDeviceReady, false);
+        $(document).ready(app.onDeviceReady);
     },
 
     // deviceready Event Handler
@@ -22,21 +25,21 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-        
-        /*$.post(app.server + '/signup', {'usernameField' : app.uuid}, function(signupData) {
+
+        $.post(app.server + '/signup', {'username' : app.uuid}, function(signupData) {
             if(signupData.response == 'OK') {
                 app.viewModel = new ViewModel(signupData);
                 ko.applyBindings(app.viewModel);
             } else {
-                $.post(app.server + '/signin', {'usernameField' : app.uuid}, function(signinData) {
+                $.post(app.server + '/signin', {'username' : app.uuid}, function(signinData) {
                     app.viewModel = new ViewModel(signinData);
                     ko.applyBindings(app.viewModel);
-                });
+                }, "json");
             }
-        });*/
+        }, "json");
 
-        app.viewModel = new ViewModel({'user' : {'usernameField' : 'test'}});
-        ko.applyBindings(app.viewModel);
+        //app.viewModel = new ViewModel({'user' : {'username' : 'test'}});
+        //ko.applyBindings(app.viewModel);
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {

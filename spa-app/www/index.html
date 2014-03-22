@@ -9,30 +9,39 @@
     <title>SPA App</title>
 </head>
 <body>
-    <div class="app">
+    <div id="main-app" class="app" data-role="page">
         <div id="title" data-role="header" data-position="fixed" data-tap-toggle="false">
-            <h1>Home</h1>
+            <h1>Me</h1>
         </div>
         <div class="contents" data-role="tabs">
-            <div data-role="ui-content" id="home-page">
-                <p>Home Screen (show messages, etc)</p>
-            </div>
-            <div data-role="ui-content" id="forms-page">
-                <!--<ul data-bind="foreach: people">-->
-
-
-            </div>
-            <div data-role="ui-content" id="stats-page">
+            <div data-role="ui-content" id="me-page">
                 <div class="fullscreen">
                     <canvas id="graph"></canvas>
+                </div>
+            </div>
+            <div data-role="ui-content" id="activity-page">
+                <p>Activity</p>
+                <div data-bind="foreach: allmessages()" data-role="listview" data-inset="true">
+                    <li><span data-bind="text: message"> </span></li>
+                </div>
+            </div>
+            <div data-role="ui-content" id="record-page">
+                <div id="question">
+                    <h1 data-bind="text: currentQuestion().prompt"></h1>
+                    <input id="answer" type="range" name="slider-fill" id="slider-fill" value="2" min="1" max="5" data-highlight="true" data-bind="value: currentQuestion().answer, slider: currentQuestion().answer" />
+                    <div class="ui-grid-a">
+                        <div class="ui-block-a"><a data-role="button" data-bind="click: previousQuestion, visible: showPrevious()" data-inline="true" data-inline="true" data-theme="a">Previous</a></div>
+                        <div class="ui-block-b"><a data-role="button" data-bind="click: nextQuestion, visible: showNext()" data-inline="true" data-theme="b">Next</a></div>     
+                    </div>
+                    <a data-role="button" data-bind="click: submitAnswers, visible: !showNext()">Submit</a> 
                 </div>
             </div>
             <div id="footing" data-role="footer" data-position="fixed" data-tap-toggle="false">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="#home-page" data-bind="click: goToHome" class="ui-btn-active ui-state-persist">Home</a></li>
-                        <li><a href="#forms-page" data-bind="click: goToForms">Forms</a></li>
-                        <li><a href="#stats-page" data-bind="click: goToStats">Stats</a></li>
+                        <li><a id="me-page-link" href="#me-page" data-bind="click: goToMe" class="ui-btn-active ui-state-persist">Me</a></li>
+                        <li><a id="activity-page-link" href="#activity-page" data-bind="click: goToActivity">Activity</a></li>
+                        <li><a id="record-page-link" href="#record-page" data-bind="click: goToForms">Record</a></li>
                     </ul>
                 </div>
             </div>
