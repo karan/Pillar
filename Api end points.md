@@ -7,7 +7,7 @@ API END POINTS
 
 Form needed:
 
-    usernameField: phone's id
+    username: phone's id
 
 Example response:
 
@@ -36,7 +36,7 @@ Or in case of an error:
 
 Form needed:
 
-    usernameField: phone's id
+    username: phone's id
 
 Example response:
 
