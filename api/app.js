@@ -58,6 +58,9 @@ app.post('/signin', user.signin);
 // add a new score
 app.post('/addscore', middleware.requiresLogin, user.addscore);
 
+// add a message (or post) that is sent out to many people
+app.post('/addmessage', middleware.requiresLogin, user.addmessage);
+
 // Start the server
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

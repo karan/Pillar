@@ -66,8 +66,25 @@ In case user not found:
 
 #### Add a score
 
-`/addscore`
+`POST /addscore`
 
 Form needed:
 
     score: the new score to add
+
+#### Add a new message for logged in user
+
+`POST addmessage`
+
+Response:
+
+    {
+        "response": "OK",
+        "message": {
+            "__v": 0,
+            "message": "o thou art",
+            "username": "tu",
+            "_id": "532d7f7b0ae6fd58f7dc129a",
+            "created_at": "2014-03-22T12:18:03.217Z"
+        }
+    }

@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var User = require('./../models/user');
+var Message = require('../models/message.js');
 
 /*
  * Sign up a user.
@@ -73,19 +74,14 @@ exports.signin = function(req, res) {
  * Add a new score for the logged in user.
  */
 exports.addscore = function(req, res) {
-    // var score = new Score({
-    //     'score': +req.body.score // cast to int
-    // });
-
-    // console.log(score);
-
     User.update(
         {'username': req.session.user.username},
         { $push: { 
             scores: {'score': +req.body.score} 
         } }, 
         function(err) {
-        if (err) console.log(err);;
+        if (err) console.log(err);
+
         User.findOne({'username': req.session.user.username}, function(err, user) {
             res.json({
                 'response': 'OK',
@@ -94,3 +90,34 @@ exports.addscore = function(req, res) {
         });
     });
 };
+
+/*
+ * Add a new message for the logged in user.
+ */
+exports.addmessage = function(req, res) {
+
+    var message = new Message({
+        message: req.body.message,
+        username: req.session.user.username
+    });
+
+    message.save(function(err) {
+        if (err) {
+            console.log(err);
+            var fail_msgs = [];
+            for (var field in err.errors) {
+                fail_msgs.push(err.errors[field].message);
+            }
+            res.json({
+                'response': 'FAIL',
+                'errors': fail_msgs
+            });
+        } else {
+            // successful registration
+            res.json({
+                'response': 'OK',
+                'message': message
+            });
+        }
+    });
+}
