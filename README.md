@@ -10,16 +10,16 @@ api
 
 2. Install node.js dependencies
 
-    npm install
+        npm install
 
 3. Start mongo
 
-    mongod --dbpath data/
+        mongod --dbpath data/
 
 4. Start redis server
     
-    redis-server
+        redis-server
 
 5. Start the app
 
-    node app.js
+        node app.js
