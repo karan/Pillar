@@ -21,13 +21,9 @@
             </div>
             <div data-role="ui-content" id="activity-page">
                 <p>Activity</p>
-                <table>
-                    <tbody data-bind="foreach: allmessages()">
-                        <tr>
-                            <td data-bind="text: message"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <ul data-bind="foreach: allmessages()" data-role="listview" data-inset="true">
+                    <li><span data-bind="text: message"> </span></li>
+                </ul>
             </div>
             <div data-role="ui-content" id="record-page">
                 <div id="question">
