@@ -37,13 +37,10 @@ module.exports = function (passport) {
     passport.use(new LocalStrategy({
         usernameField: 'username'
     }, function(username, callback) {
+            console.log('Strategy called');
             console.log('authenticating.. LocalStrategy: ' + username)
 
-            // user can also login using email/password
-            var conditions = {}
-            conditions.username = username;
-            
-            User.findOne(conditions, function(err, user) {
+            User.findOne( {username: username}, function(err, user) {
                 if (err) return callback(err);
 
                 if (!user) {
@@ -51,18 +48,7 @@ module.exports = function (passport) {
                     return callback(null, false, {message: 'Username not found'});
                 }
 
-                // user exists, check for password match
-                user.comparePassword(username, function(err, isMatch) {
-                    if (err) return callback(err);
-                    console.log(isMatch + ' ' + username);
-                    if (isMatch) {
-                        // correct password
-                        return callback(null, user);
-                    }
-
-                    // password incorrect
-                    return callback(null, false, {message: 'User not found'});
-                });
+                return callback(null, user);
             });
         }
     ));

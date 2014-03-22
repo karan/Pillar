@@ -50,6 +50,7 @@ if ('development' == app.get('env')) {
 
 // login the user
 app.post('/signin', passport.authenticate('local'), function (req, res) {
+    console.log('Login called');
     req.json(req.user);
 });
 
