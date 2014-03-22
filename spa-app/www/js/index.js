@@ -1,4 +1,4 @@
-if(typeof window.device == 'undefined')
+if(typeof window.device == 'undefined') {
     window.device = {
         'uuid' : window.navigator.userAgent
     };
