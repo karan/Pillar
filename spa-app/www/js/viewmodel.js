@@ -47,6 +47,7 @@ var ViewModel = function(init) {
 		$("#graph").css({'width' : w, 'height' : h});
 	    $("#graph").attr('width', w);
 	    $("#graph").attr('height', h);
+	    var range = parseInt($("#time-selector :radio:checked").val());
 	    //user self.dataPoints here
 	    new Chart("#graph", [new DataPoint(1, 30)]);
 	}
@@ -145,6 +146,10 @@ var ViewModel = function(init) {
         console.log(self.allmessages);
 		return true;
 	};
+
+	self.selectTime = function() {
+		self.drawChart();
+	}
 
 	self.goToForms = function() {
 		$("#title > h1").text("New Entry");
