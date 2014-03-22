@@ -5,7 +5,6 @@
 
 var express = require('express'),       // the main ssjs framework
     db = require('./config/db'),        // database connection
-    passport = require('passport'),     // for user authentication
     routes = require('./routes'),       // by default, brings in routes/index.js
     user = require('./routes/user'),  // all login for admin panel
     constants = require('./config/constants'),
@@ -34,10 +33,6 @@ app.configure(function(){
     // faux HTTP requests - PUT or DELETE
     app.use(express.methodOverride());
     app.use(express.session({ secret: 'ecoSecret' }));
-    // initialize passport
-    app.use(passport.initialize());
-    // for persistent session logins otherwise each request would need credentials
-    app.use(passport.session());
     // invokes the routes' callbacks
     app.use(app.router);
     // every file <file> in /public is served at example.com/<file>
@@ -56,22 +51,7 @@ app.get('/', routes.index);
 app.post('/signup', user.signup); // signup page send a POST request here
 
 // login the user
-app.post('/signin', function(req, res, next) {
-    console.log(req.body);
-    passport.authenticate('local', function(err, user, info) {
-        console.log("after auth");
-        if (err) {
-            return next(err); // will generate a 500 error
-        }
-        // Generate a JSON response reflecting authentication status
-        if (!user) {
-            return res.send({ success : false, message : 'authentication failed' });
-        }
-        return res.send({ success : true, message : 'authentication succeeded' });
-    })(req, res, next);
-});
-
-require('./config/pass')(passport);
+app.post('/signin', user.signin);
 
 // Start the server
 http.createServer(app).listen(app.get('port'), function(){

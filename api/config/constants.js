@@ -7,9 +7,7 @@
 
 var Constants = {
     // The name of the app
-    APP_NAME: "SPA", 
-    // Used in models/user.js to compute salt for password
-    SALT_WORK_FACTOR: 10
+    APP_NAME: "SPA"
 };
 
 module.exports = Constants;

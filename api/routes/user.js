@@ -7,10 +7,10 @@ var User = require('./../models/user');
 exports.signup = function(req, res){
     // get the form values from "name" attribute of the form
     var user = new User({
-        'username': req.body.usernameField
+        'username': req.body.username
     });
 
-    console.log(user.username);
+    console.log('signing up ' + user.username);
 
     user.save(function(err) {
         if (err) {
@@ -39,5 +39,19 @@ exports.signup = function(req, res){
                 'user': user
             });
         }
+    });
+};
+
+/*
+ * Sign in a user
+ */
+exports.signin = function(req, res) {
+    console.log(req.body);
+    var username = req.body.username;
+
+    console.log('signing in ' + username);
+
+    User.findOne( {'username': username}, function(err, user) {
+        console.log(user);
     });
 };

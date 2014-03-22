@@ -22,14 +22,4 @@ var userSchema = new Schema({
     }
 });
 
-// Always hash a password before saving it to db
-// Mongoose middleware is not invoked on update() operations, 
-// so you must use a save()if you want to update user passwords.
-userSchema.pre('save', function(next) {
-    var user = this;
-    // only hash this password if it has been modified, or is new
-    if (!user.isModified('username')) return next();
-    next();
-});
-
 module.exports = mongoose.model('User', userSchema);
