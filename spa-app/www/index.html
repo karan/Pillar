@@ -70,11 +70,12 @@
             <h1>View Message</h1>
         </div>
         
+        <div id="message-replies">
         <p class="white_font">Anonymous Note:</p>
-        <div class="ui-body ui-body-a ui-corner-all message-box">
+        <div class="ui-body ui-body-a ui-corner-all">
             <span data-bind="text: currentMessage()"></span>
         </div>
-        <div id="action-buttons">
+        <div>
             <a data-role="button" data-bind="click: generatePrayer" data-inline="true" data-theme="a">Generate Prayer</a>
             <a data-role="button" data-bind="click: showAddMessage" data-inline="true" data-theme="a">Message</a>
         </div>
@@ -89,6 +90,7 @@
                 <p><span data-bind="text: $data"> </span></p>
             </div>
         </div>
+    </div>
     </div>
 
     <div id="new-note-app" class="app" data-role="page">
