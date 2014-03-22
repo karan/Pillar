@@ -130,6 +130,7 @@ var ViewModel = function(init) {
             "__v": 0,
             "created_at": "2014-03-22T12:17:53.550Z"
         });
+        console.log(self.allmessages);
 		return true;
 	};
 
