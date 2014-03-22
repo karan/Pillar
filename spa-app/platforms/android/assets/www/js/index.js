@@ -17,8 +17,7 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-        //document.addEventListener('deviceready', this.onDeviceReady, false);
-        $(document).ready(app.onDeviceReady);
+        document.addEventListener('deviceready', this.onDeviceReady, false);
     },
 
     // deviceready Event Handler
@@ -27,7 +26,7 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-
+        app.uuid = window.device.uuid;
         $.post(app.server + '/signup', {'username' : app.uuid}, function(signupData) {
             if(signupData.response == 'OK') {
                 app.viewModel = new ViewModel(signupData);
