@@ -9,7 +9,8 @@ var express = require('express'),       // the main ssjs framework
     user = require('./routes/user'),  // all login for admin panel
     constants = require('./config/constants'),
     http = require('http'),
-    path = require('path'),             // for pathn manipulation
+    path = require('path'),             // for path manipulation
+    middleware = require('./config/middleware.js'),
     app = express();                    // create an express app
 
 var app = express();
@@ -39,6 +40,7 @@ app.configure(function(){
     app.use(express.static(path.join(__dirname, 'public')));
 });
 
+
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
@@ -52,6 +54,9 @@ app.post('/signup', user.signup); // signup page send a POST request here
 
 // login the user
 app.post('/signin', user.signin);
+
+// add a new score
+app.post('/addscore', middleware.requiresLogin, user.addscore);
 
 // Start the server
 http.createServer(app).listen(app.get('port'), function(){
