@@ -6,16 +6,20 @@ Yo dis gon be da futurz.
 api
 ====
 
-`cd api`
+1. `cd api`
 
-Install node.js dependencies
+2. Install node.js dependencies
 
-`npm install`
+        npm install
 
-Start the app
+3. Start mongo
 
-`node app.js`
+        mongod --dbpath data/
 
-Start mongo
+4. Start redis server
+    
+        redis-server
 
-`mongod --dbpath data/`
+5. Start the app
+
+        node app.js

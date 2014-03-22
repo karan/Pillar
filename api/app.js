@@ -11,7 +11,8 @@ var express = require('express'),       // the main ssjs framework
     http = require('http'),
     path = require('path'),             // for path manipulation
     middleware = require('./config/middleware.js'),
-    app = express();                    // create an express app
+    app = express(),                    // create an express app
+    RedisStore = require('connect-redis')(express); // for persistent sessions
 
 var app = express();
 
@@ -33,7 +34,14 @@ app.configure(function(){
     app.use(express.bodyParser());
     // faux HTTP requests - PUT or DELETE
     app.use(express.methodOverride());
-    app.use(express.session({ secret: 'ecoSecret' }));
+    app.use(express.session({ 
+        secret: 'ecoSecret',
+        store: new RedisStore({
+            host: 'localhost',
+            port: 6379,
+            db: 2
+        }),
+    }));
     // invokes the routes' callbacks
     app.use(app.router);
     // every file <file> in /public is served at example.com/<file>
@@ -57,6 +65,15 @@ app.post('/signin', user.signin);
 
 // add a new score
 app.post('/addscore', middleware.requiresLogin, user.addscore);
+
+// add a message (or post) that is sent out to many people
+app.post('/addmessage', middleware.requiresLogin, user.addmessage);
+
+// get messages posted by logged in user
+app.get('/mymessages', middleware.requiresLogin, user.getMyMessages);
+
+// get all messages on the network except those by logged in user
+app.get('/allmessages', middleware.requiresLogin, user.getAllMessages);
 
 // Start the server
 http.createServer(app).listen(app.get('port'), function(){
