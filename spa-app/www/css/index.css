@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
 
 /*
     BLUE  #6ABBD8
@@ -39,4 +40,27 @@ body {
 
 body > div.ui-page.ui-page-theme-a.ui-page-header-fixed.ui-page-footer-fixed.ui-page-active > div > div.contents.ui-tabs.ui-widget.ui-widget-content.ui-corner-all {
     padding: 15px 10px;
+}
+
+#questionPrompt {
+    font-family: 'Open Sans Condensed', sans-serif;
+    margin: 30px 30%;
+    text-shadow: none;
+    width: 100%;
+}
+
+#answer {
+    visibility: hidden;
+}
+
+.ui-slider-track {
+    margin: 0 15px;
+}
+
+div.ui-slider {
+    margin: 30px;
+}
+
+#question > div.ui-grid-a.ui-responsive.custom {
+    margin: auto 40px;
 }
