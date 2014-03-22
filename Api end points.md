@@ -76,6 +76,10 @@ Form needed:
 
 `POST addmessage`
 
+Form needed:
+
+    message: message body (**must** be 10-2000 characters)
+
 Response:
 
     {
