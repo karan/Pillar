@@ -28,12 +28,13 @@ var ViewModel = function(init) {
 	self.questionNumber = new ko.observable(0);
 
 	self.allmessages = new ko.observableArray();
-	self.messagesRendered = false;
 
 	self.currentMessage = new ko.observable('');
 	self.currentReplies = new ko.observableArray();
 	self.dataPoints = [];
 	self.prayer = new ko.observable('');
+	self.showPrayer = new ko.observable(false);
+	self.toggleReplyMessage = new ko.observable(false);
 
 
 	self.rating = ko.computed(function() {
@@ -92,9 +93,22 @@ var ViewModel = function(init) {
 		return result;
 	};
 
+	var loadUser = function(data) {
+		self.user = data;
+		self.dataPoints = loadPoints(data.scores || []);
+	};
+
+	var loadMessages = function() {
+		$.get(app.server + '/allmessages', function(data) {
+			for(var i = 0; i < data.messages.length; i++) {
+				self.allmessages.push(data.messages[i]);
+			}
+		});
+	};
+
 	var loadVM = function(data) {
-		self.user = data.user;
-		self.dataPoints = loadPoints(data.user.scores || []);
+		loadUser(data.user);
+		loadMessages();
 		self.formAnswers.push({
 			'prompt' : 'Have you felt low in spirits or sad?',
 			'answer' : new ko.observable(2)
@@ -111,11 +125,6 @@ var ViewModel = function(init) {
 			'prompt' : 'Have you felt less self-confident?',
 			'answer' : new ko.observable(2)
 		});
-		/*
-		self.formAnswers.push({
-			'prompt' : ' Have you felt that life wasn\'t worth living?',
-			'answer' : new ko.observable(5)
-		});*/
 		self.formAnswers.push({
 			'prompt' : 'Have you had difficulty in concentrating?',
 			'answer' : new ko.observable(2)
@@ -154,28 +163,6 @@ var ViewModel = function(init) {
 	};
 
 	self.goToActivity = function() {
-		if (!self.messagesRendered) {
-			// $.getJSON(app.server + '/allmessages', function(data) { 
-			// 	console.log(data);
-			// 	for (var i=0; i<data["messages"].length; i++)
-			//     	self.allmessages.push(data["messages"][i]);
-			// });
-			self.allmessages.push({
-		        "message": "this is a test",
-		        "username": "testing1",
-		        "_id": "532e10672587b7000040368a",
-		        "replies": [],
-		        "created_at": "2014-03-22T22:36:23.203Z"
-	        });
-	        self.allmessages.push({
-	            "message": "this is another test",
-		        "username": "testing1",
-		        "_id": "532e108a2587b7000040368b",
-		        "replies": [],
-		        "created_at": "2014-03-22T22:36:58.810Z"
-	        });
-	        self.messagesRendered = true;
-	    }
 		return true;
 	};
 
@@ -206,7 +193,7 @@ var ViewModel = function(init) {
 	self.submitAnswers = function() {
 		var score = calculateScore();
 		$.post(app.server + '/addscore', {'score' : score}, function(data) {
-			self.dataPoints.push(new DataPoint(new Date().toString(), score));
+			loadUser(data.user);
 			$("#record-page-link").removeClass("ui-btn-active");
 			$("#record-page-link").removeClass("ui-state-persist");
 			resetForm();
@@ -218,26 +205,38 @@ var ViewModel = function(init) {
 	self.addMessage = function() {
 		var message = $('#newMessage').val();
 		$.post(app.server + '/addmessage', {'message' : message}, function(data) {
-			console.log(data);
+			self.allmessages.unshift(data.message);
+			$("#me-page-link").removeClass("ui-btn-active");
+			$("#me-page-link").removeClass("ui-state-persist");
+			$("#activity-page-link").addClass("ui-btn-active");
+			$("#activity-page-link").addClass("ui-state-persist");
 		}, "json");
 
 		return true;
 	};
 
 	self.generatePrayer = function() {
-
+		$.get(app.server + '/getquote', function(data) {
+			self.prayer(data.quote.preview + " ~" + data.quote.title);
+			self.showPrayer(true);
+		});
 	};
 
 	self.showAddMessage = function() {
-
+		self.toggleReplyMessage(!self.toggleReplyMessage());
 	};
 
-	self.showPrayer = function() {
-
+	self.removePrayer = function() {
+		self.prayer('');
+		self.showPrayer(false);
 	};
 
 	self.drawChart = function() {
 		respondCanvas();
+	};
+
+	self.sendSupport = function() {
+		console.log(self.currentMessage());
 	};
 
 	self.goToMessage = function(message) {
@@ -247,6 +246,7 @@ var ViewModel = function(init) {
 			self.currentMessage(data["message"]["message"]);
 			for (var i=0; i<data["message"]["replies"].length; i++)
 				self.currentReplies.push(data["message"]["replies"][i]["message"]);
+			console.log(self.currentReplies);
 			$("#me-page-link").removeClass("ui-btn-active");
 			$("#me-page-link").removeClass("ui-state-persist");
 			$("#activity-page-link").addClass("ui-btn-active");
