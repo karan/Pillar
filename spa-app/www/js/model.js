@@ -22,35 +22,37 @@ var Chart = function(canvas, data) {
 	var span = end - beginning;
 	var barWidth = (brush.width() - 2 * padding)/ data.length;
 
+	var drawLegend = function() {
+		brush.drawLine({
+			  strokeStyle: '#000',
+			  strokeWidth: 2,
+			  x1: padding, y1: 1.5 * padding,
+			  x2: padding, y2: brush.height() - padding,
+		});
 
+		brush.drawLine({
+			  strokeStyle: '#000',
+			  strokeWidth: 2,
+			  x1: 1.5 * padding, y1: brush.height() - padding + padding / 2,
+			  x2: brush.width() - padding, y2: brush.height() - padding + padding / 2,
+		});
 
-	brush.drawLine({
-		  strokeStyle: '#000',
-		  strokeWidth: 2,
-		  x1: padding, y1: 1.5 * padding,
-		  x2: padding, y2: brush.height() - padding,
-	});
+		brush.drawEllipse({
+			  fillStyle: '#ABFF9F',
+			  x: padding, 
+			  y: brush.height() - 0.5 * padding,
+			  width: barWidth / 6, height: barWidth / 6
+		});
 
-	brush.drawLine({
-		  strokeStyle: '#000',
-		  strokeWidth: 2,
-		  x1: 1.5 * padding, y1: brush.height() - padding + padding / 2,
-		  x2: brush.width() - padding, y2: brush.height() - padding + padding / 2,
-	});
+		brush.drawEllipse({
+			  fillStyle: '#ABFF9F',
+			  x: padding, 
+			  y: padding,
+			  width: barWidth / 6, height: barWidth / 6
+		});
+	};
 
-	brush.drawEllipse({
-		  fillStyle: '#ABFF9F',
-		  x: padding, 
-		  y: brush.height() - 0.5 * padding,
-		  width: barWidth / 6, height: barWidth / 6
-	});
-
-	brush.drawEllipse({
-		  fillStyle: '#ABFF9F',
-		  x: padding, 
-		  y: padding,
-		  width: barWidth / 6, height: barWidth / 6
-	});
+	drawLegend();
 
 	var lineObj = {
 		  strokeStyle: '#FFF',
