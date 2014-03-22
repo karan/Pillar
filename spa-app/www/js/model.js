@@ -15,12 +15,14 @@ var Chart = function(canvas, data) {
 	brush.attr('width', brush.width());
 	brush.attr('height', brush.height());
 
-	var padding = 60;
+	var padding = brush.width() / 25;
 
 	var beginning = data[0].timeStamp;
 	var end = data[data.length - 1].timeStamp;
 	var span = end - beginning;
 	var barWidth = (brush.width() - 2 * padding)/ data.length;
+
+
 
 	brush.drawLine({
 		  strokeStyle: '#000',
@@ -40,14 +42,14 @@ var Chart = function(canvas, data) {
 		  fillStyle: '#ABFF9F',
 		  x: padding, 
 		  y: brush.height() - 0.5 * padding,
-		  width: 40, height: 40
+		  width: barWidth / 6, height: barWidth / 6
 	});
 
 	brush.drawEllipse({
 		  fillStyle: '#ABFF9F',
 		  x: padding, 
 		  y: padding,
-		  width: 40, height: 40
+		  width: barWidth / 6, height: barWidth / 6
 	});
 
 	var lineObj = {
@@ -64,27 +66,29 @@ var Chart = function(canvas, data) {
 		var h = score * (brush.height() - padding - padding / 2)/ maxScore
 		var y = brush.height() - h / 2 - padding;
 
-
-		console.log(x);
 		brush.drawRect({
+			layer: true,
 			  fillStyle: 'FFF',
 			  x: x, 
 			  y: y,
 			  width: w,
 			  height: h,
 			  cornerRadius: 10,
-			  click: function(layer) {
-			  	$(this).animateLayer(0, {
-			  		fillStyle: '#ABFF9F'
-			  	});
-			  }
+
+			click: function(layer) {
+				    // Animate layer when touched
+				    $(this).animateLayer(layer, {
+				      fillStyle: '#ABFF9F',
+				    }, 250);
+			  },
+
 		});
 
 		brush.drawEllipse({
 			  fillStyle: '#000',
 			  x: x, 
 			  y: y - h/2,
-			  width: 25, height: 25
+			  width: barWidth / 8, height: barWidth / 8
 		});
 
 		lineObj['x' + (index + 1)] = x;
