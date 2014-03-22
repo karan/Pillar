@@ -79,7 +79,7 @@
             <a data-role="button" data-bind="click: showAddMessage" data-inline="true" data-theme="a">Message</a>
         </div>
         <div data-bind="visible: toggleReplyMessage">
-            <textarea placeholder="Type your words of encouragement here!"></textarea>
+            <textarea id="reply-message" placeholder="Type your words of encouragement here!"></textarea>
         </div>
         <div class="ui-body ui-body-b prayer" data-bind="visible: showPrayer, text: prayer, click: removePrayer"></div>
         <a data-role="button" data-bind="visible: toggleReplyMessage() || showPrayer(), click: sendSupport" data-inline="true" data-theme="a">Send Support!</a>
@@ -107,7 +107,10 @@
             <h1>Inbox</h1>
         </div>
         <div class="ui-body ui-body-a ui-corner-all" data-bind="foreach: inboxMessages">
-            <p><span data-bind="text: message"> </span></p>
+            <p><em><span data-bind="text: message"> </span></em></p>
+            <ul data-role="listview" data-bind="foreach: replies">
+                <li data-bind="text: message"></li>
+            </ul>
         </div>
     </div>
 

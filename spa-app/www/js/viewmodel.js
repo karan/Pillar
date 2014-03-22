@@ -257,7 +257,6 @@ var ViewModel = function(init) {
 			self.currentMessage(data["message"]["message"]);
 			for (var i=0; i<data["message"]["replies"].length; i++)
 				self.currentReplies.push(data["message"]["replies"][i]["message"]);
-			console.log(self.currentReplies);
 			$("#me-page-link").removeClass("ui-btn-active");
 			$("#me-page-link").removeClass("ui-state-persist");
 			$("#activity-page-link").addClass("ui-btn-active");
