@@ -42,7 +42,7 @@ var Chart = function(canvas, data, timeFrame, sample) {
 			x: padding + barWidth / 2,
 			y: 1.5 * padding,
 			fromCenter: false,
-			fontSize: barWidth / 8,
+			fontSize: barWidth / 6,
 			fontFamily: 'sans-serif'
 		});
 
