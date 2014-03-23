@@ -1,5 +1,5 @@
 window.device = window.device || {
-    'uuid' : 'newuser'
+    'uuid' : 'testuserstring'
 };
 
 var app = {
