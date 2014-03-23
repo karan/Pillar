@@ -102,7 +102,20 @@ var Chart = function(canvas, data, timeFrame) {
 		  		$(this).animateLayer(layer, {
 		  			fillStyle: '#ABFF9F',
 		  		}, 125);
+		  		brush.drawText({
+		  			layer: true,
+					name: 'label',
+					fillStyle: '#000000',
+					fontSize: '24pt',
+					x: x,
+					y: y - h / 2 - 40,
+					strokeWidth: 2,
+					text: "" + score
+				});
 				brush.drawLayers();
+				
+			} else if (brush.getLayer('label') != null) {
+				brush.removeLayer('label');
 			}
 
 		};
