@@ -24,9 +24,10 @@ var Chart = function(canvas, data, timeFrame) {
 	var padding = brush.width() / 25;
 
 	var numBars = Math.max(5, data.length);
-	var beginning = data[0].timeStamp;
+	/*var beginning = data[0].timeStamp;
 	var end = data[data.length - 1].timeStamp;
-	var span = end - beginning;
+	var span = end - beginning;*/
+	var span = timeFrame;
 	var barWidth = (brush.width() - 2 * padding)/ numBars;
 
 	var drawLegend = function() {
@@ -126,8 +127,24 @@ var Chart = function(canvas, data, timeFrame) {
 			  width: barWidth / 8, height: barWidth / 8
 		});
 	};
+	var now = new Date();
+	if(timeFrame == 1) {
+		now.setDate(now.getDate() - 7);
+	} else if (timeFrame == 2) {
+		now.setMonth(now.getMonth() - 1); 
+	} else {
+		now.setYear(now.getYear() - 1);
+	}
+	var L = now.getTime() / 1000;
 
+	var rangeData = []
 	for(i = 0; i < data.length; i++) {
+		if(data[i].timeStamp >= L) {
+			rangeData.push(data[i]);
+		}
+	}
+
+	for(i = 0; i < rangeData.length; i++) {
 		drawBar(i, data[i].score, 50);
 	}
 
