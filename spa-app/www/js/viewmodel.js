@@ -43,15 +43,13 @@ var ViewModel = function(init) {
 
 	var respondCanvas = function(){ 
 		var w = $(window).width();
-		var h = $(window).height() - $("#title").height() - $("#footing").height() - 20;
+		var h = $(window).height() - $("#title").height() - $("#footing").height() - 75;
 		$("#graph").css({'width' : w, 'height' : h});
 	    $("#graph").attr('width', w);
 	    $("#graph").attr('height', h);
 	    var range = parseInt($("#time-selector :radio:checked").val());
 	    //user self.dataPoints here
-	    		$("#graph").clearCanvas();
-
-	    new Chart("#graph", [new DataPoint(1, 30)]);
+	    new Chart("#graph", self.dataPoints, range);
 	}
 
 	var resetForm = function() {
