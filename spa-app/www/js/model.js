@@ -45,7 +45,7 @@ var Chart = function(canvas, data, timeFrame) {
 			  x2: brush.width() - padding, y2: brush.height() - padding + padding / 2,
 		});
 
-		brush.addLayer({
+		/*brush.addLayer({
 			type: 'ellipse',
 			  fillStyle: '#ABFF9F',
 			  x: padding, 
@@ -59,7 +59,25 @@ var Chart = function(canvas, data, timeFrame) {
 			  x: padding, 
 			  y: padding,
 			  width: brush.width() / 40, height: brush.width() / 40
-		});
+		});*/
+
+		var faceSize = Math.max(brush.width() / 40, 20);
+
+		brush.addLayer({
+			type: 'image',
+			source: 'face.png',
+			x: padding,
+			y: brush.height() - 0.5 * padding,
+			width: faceSize, height: faceSize,
+		})
+
+		brush.addLayer({
+			type: 'image',
+			source: 'face2.png',
+			x: padding,
+			y: padding,
+			width: faceSize, height: faceSize,
+		})
 	};
 
 	drawLegend();
