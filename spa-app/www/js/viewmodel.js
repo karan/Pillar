@@ -49,6 +49,8 @@ var ViewModel = function(init) {
 	    $("#graph").attr('height', h);
 	    var range = parseInt($("#time-selector :radio:checked").val());
 	    //user self.dataPoints here
+	    		$("#graph").clearCanvas();
+
 	    new Chart("#graph", [new DataPoint(1, 30)]);
 	}
 

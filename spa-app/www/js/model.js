@@ -17,6 +17,7 @@ var Chart = function(canvas, data, timeFrame) {
 
 	//out comes drawing on canvas
 	var brush = $(canvas);
+	brush.removeLayers();
 	brush.attr('width', brush.width());
 	brush.attr('height', brush.height());
 	var padding = brush.width() / 25;
@@ -130,9 +131,6 @@ var Chart = function(canvas, data, timeFrame) {
 	}
 
 	brush.addLayer(lineObj);
-
-
-
 
 	brush.drawLayers();
 
