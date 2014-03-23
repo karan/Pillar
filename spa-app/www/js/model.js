@@ -52,7 +52,7 @@ var Chart = function(canvas, data, timeFrame) {
 			  fillStyle: '#ABFF9F',
 			  x: padding, 
 			  y: brush.height() - 0.5 * padding,
-			  width: barWidth / 6, height: barWidth / 6
+			  width: brush.width() / 40, height: brush.width() / 40
 		});
 
 		brush.addLayer({
@@ -60,7 +60,7 @@ var Chart = function(canvas, data, timeFrame) {
 			  fillStyle: '#ABFF9F',
 			  x: padding, 
 			  y: padding,
-			  width: barWidth / 6, height: barWidth / 6
+			  width: brush.width() / 40, height: brush.width() / 40
 		});
 	};
 
@@ -79,23 +79,33 @@ var Chart = function(canvas, data, timeFrame) {
 		var w = barWidth - 2 * barWidth / 10;
 		var h = score * (brush.height() - padding - padding / 2)/ maxScore
 		var y = brush.height() - h / 2 - padding;
-		var white = true;
 
-		var toggle = function(layer) {
-		{
-			  if(white) {
-			  		$(this).animateLayer(layer, {
-			  			fillStyle: '#ABFF9F',
-			  		}, 250);
-			  	} else {
-			  		$(this).animateLayer(layer, {
+		var turnWhite = function(layers) {
+			for(var i = 0; i < layers.length; i++) {
+				if(layers[i].name != null && layers[i].fillStyle != 'rgb(255,255,255)') {
+			  		brush.animateLayer(layers[i], {
 			  			fillStyle: '#FFFFFF',
-			  		}, 250);
-			  	}
-			  	brush.drawLayers();
-			  }
-			  white = !white;
-		}
+			  		}, 125);					
+				}
+			}
+		};
+		var toggle = function(layer) 
+		{
+			var layers = brush.getLayers();
+			if(layer.fillStyle != 'rgb(255,255,255)') {
+				var alreadyGreen = true;
+			} else {
+				var alreadyGreen = false;
+			}
+			turnWhite(layers);
+			if(!alreadyGreen) {
+		  		$(this).animateLayer(layer, {
+		  			fillStyle: '#ABFF9F',
+		  		}, 125);
+				brush.drawLayers();
+			}
+
+		};
 
 		// Create and draw a rectangle layer
 		brush.addLayer({
