@@ -216,10 +216,11 @@ var ViewModel = function(init) {
 	};
 
 	self.addMessage = function() {
-		/*var score = "";
-		$.post(app.server + '/addmessage', {'message' : message}, function() {
-
-		}, "json"); */
+		var message = $('#newMessage').val();
+		$.post(app.server + '/addmessage', {'message' : message}, function(data) {
+			console.log(data);
+			document.location.href = "#activity-page";
+		}, "json");
 	};
 
 	self.generatePrayer = function() {
@@ -233,8 +234,6 @@ var ViewModel = function(init) {
 	self.showPrayer = function() {
 
 	};
-
-
 
 	self.drawChart = function() {
 		respondCanvas();
