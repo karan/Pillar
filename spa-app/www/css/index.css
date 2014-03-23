@@ -44,9 +44,10 @@ body > div.ui-page.ui-page-theme-a.ui-page-header-fixed.ui-page-footer-fixed.ui-
 
 #questionPrompt {
     font-family: 'Open Sans Condensed', helvetica, sans-serif;
-    margin: 30px 30% 80px;
+    margin: 30px 0px 80px;
     text-shadow: none;
     width: 100%;
+    text-align: center;
 }
 
 #answer {
