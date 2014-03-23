@@ -27,6 +27,10 @@ var ViewModel = function(init) {
 	self.questionNumber = new ko.observable(0);
 	self.answer = new ko.observable();
 	self.allmessages = new ko.observableArray();
+	self.messagesRendered = false;
+
+	self.currentMessage = new ko.observable('');
+	self.currentReplies = new ko.observableArray();
 	self.dataPoints = [];
 
     self.currentQuestion = ko.computed(function() {
@@ -43,7 +47,7 @@ var ViewModel = function(init) {
 
 	var respondCanvas = function(){ 
 		var w = $(window).width();
-		var h = $(window).height() - $("#title").height() - $("#footing").height() - 75;
+		var h = $(window).height() - $("#footing").height() - 75;
 		$("#graph").css({'width' : w, 'height' : h});
 	    $("#graph").attr('width', w);
 	    $("#graph").attr('height', h);
@@ -123,27 +127,28 @@ var ViewModel = function(init) {
 	}
 
 	self.goToActivity = function() {
-		$("#title > h1").text("Activity");
-		// $.getJSON(app.server + '/allmessages', function(data) { 
-		// 	console.log(data);
-		// 	for (var i=0; i<data["messages"].length; i++)
-		//     	self.allmessages.push(data["messages"][i]);
-		// });
-		self.allmessages.push({
-            "message": "o thou art",
-            "username": "tu",
-            "_id": "532d7f7b0ae6fd58f7dc129a",
-            "__v": 0,
-            "created_at": "2014-03-22T12:18:03.217Z"
-        });
-        self.allmessages.push({
-            "message": "\"hello world\"",
-            "username": "tu",
-            "_id": "532d7f710ae6fd58f7dc1299",
-            "__v": 0,
-            "created_at": "2014-03-22T12:17:53.550Z"
-        });
-        console.log(self.allmessages);
+		if (!self.messagesRendered) {
+			// $.getJSON(app.server + '/allmessages', function(data) { 
+			// 	console.log(data);
+			// 	for (var i=0; i<data["messages"].length; i++)
+			//     	self.allmessages.push(data["messages"][i]);
+			// });
+			self.allmessages.push({
+		        "message": "this is a test",
+		        "username": "testing1",
+		        "_id": "532e10672587b7000040368a",
+		        "replies": [],
+		        "created_at": "2014-03-22T22:36:23.203Z"
+	        });
+	        self.allmessages.push({
+	            "message": "this is another test",
+		        "username": "testing1",
+		        "_id": "532e108a2587b7000040368b",
+		        "replies": [],
+		        "created_at": "2014-03-22T22:36:58.810Z"
+	        });
+	        self.messagesRendered = true;
+	    }
 		return true;
 	};
 
@@ -152,12 +157,11 @@ var ViewModel = function(init) {
 	}
 
 	self.goToForms = function() {
-		$("#title > h1").text("New Entry");
+		resetForm();
 		return true;
 	};
 
 	self.goToMe = function() {
-		$("#title > h1").text("Me");
 		self.drawChart();
 		return true;
 	};
@@ -194,6 +198,17 @@ var ViewModel = function(init) {
 	self.drawChart = function() {
 		respondCanvas();
 	};
+
+	self.goToMessage = function(message) {
+		var messageID = message._id;
+		$.getJSON(app.server + '/getmessage?messageID=' + messageID, function(data) { 
+			self.currentMessage = data["message"]["message"];
+			console.log(self.currentMessage);
+			for (var i=0; i<data["message"]["replies"].length; i++)
+				self.currentReplies.push(data["message"]["replies"][i]["message"]);
+		});
+		return true;
+	}
 
 	$(window).resize(respondCanvas);
 	loadVM(init);

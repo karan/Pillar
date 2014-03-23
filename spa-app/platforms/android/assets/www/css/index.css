@@ -24,9 +24,8 @@ body {
     height: 100%;
 }
 
-#time-selector {
-    margin: 0 auto;
-    width: 335px;
+#time-selector fieldset{
+    text-align: center;
 }
 
 .fullscreen {
