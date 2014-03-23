@@ -47,7 +47,7 @@ var ViewModel = function(init) {
 
 	var respondCanvas = function(){ 
 		var w = $(window).width();
-		var h = $(window).height() - $("#title").height() - $("#footing").height() - 75;
+		var h = $(window).height() - $("#footing").height() - 75;
 		$("#graph").css({'width' : w, 'height' : h});
 	    $("#graph").attr('width', w);
 	    $("#graph").attr('height', h);
@@ -127,7 +127,6 @@ var ViewModel = function(init) {
 	}
 
 	self.goToActivity = function() {
-		$("#title > h1").text("Activity");
 		if (!self.messagesRendered) {
 			// $.getJSON(app.server + '/allmessages', function(data) { 
 			// 	console.log(data);
@@ -158,12 +157,10 @@ var ViewModel = function(init) {
 	}
 
 	self.goToForms = function() {
-		$("#title > h1").text("New Entry");
 		return true;
 	};
 
 	self.goToMe = function() {
-		$("#title > h1").text("Me");
 		self.drawChart();
 		return true;
 	};
