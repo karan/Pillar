@@ -78,7 +78,25 @@ var ViewModel = function(init) {
 	    $("#graph").attr('height', h);
 	    var range = parseInt($("#time-selector :radio:checked").val());
 	    //user self.dataPoints here
-	    new Chart("#graph", self.dataPoints, range);
+	    var sampleScores = [30, 27, 31, 33, 37];
+	    var sampleTimestamps = [];
+	    var start= new Date();
+	    start.setDate(start.getDate() - 7);
+	    for(i = 0; i < 5; i++) {
+	    	start.setDate(start.getDate() + 1)
+	    	sampleTimestamps.push(start.getTime() / 1000);
+	    }
+	    var samplePoints = []
+	    for(i = 0; i < 5; i++) {
+	    	samplePoints.push(new DataPoint(sampleTimestamps[i]), sampleScores[i]);
+	    }
+	    if(self.dataPoints.length == 0) {
+	    	console.log("no data")
+	    	 new Chart("#graph", samplePoints, range, true);
+	    } else {
+	    	console.log("blah")
+	    	new Chart("#graph", self.dataPoints, range, false);
+	    }
 	};
 
 	var resetForm = function() {
