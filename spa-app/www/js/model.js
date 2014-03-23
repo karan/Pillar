@@ -148,7 +148,7 @@ var Chart = function(canvas, data, timeFrame, sample) {
 		  			layer: true,
 					name: 'date',
 					fillStyle: '#000000',
-					fontSize: barWidth / 8,
+					fontSize: Math.max(barWidth / 4, 20),
 					x: x,
 					y: y,
 					strokeWidth: 2,
