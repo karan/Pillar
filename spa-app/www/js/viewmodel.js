@@ -21,11 +21,12 @@ ko.bindingHandlers.slider = {
 };
 
 var ViewModel = function(init) {
+
 	var self = this;
 	self.user = {};
 	self.formAnswers = new ko.observableArray();
 	self.questionNumber = new ko.observable(0);
-	self.answer = new ko.observable();
+
 	self.allmessages = new ko.observableArray();
 	self.messagesRendered = false;
 
