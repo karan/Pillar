@@ -172,6 +172,8 @@ var ViewModel = function(init) {
 	};
 
 	self.goToActivity = function() {
+		self.allmessages.removeAll();
+		self.loadMessages()
 		return true;
 	};
 
