@@ -78,7 +78,7 @@ var Chart = function(canvas, data, timeFrame) {
 		var h = score * (brush.height() - padding - padding / 2)/ maxScore
 		var y = brush.height() - h / 2 - padding;
 
-		var date = new Date(timeStamp);
+		var date = new Date(timeStamp * 1000);
 
 		var turnWhite = function(layers) {
 			for(var i = 0; i < layers.length; i++) {
