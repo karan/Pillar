@@ -105,7 +105,6 @@ var Chart = function(canvas, data, timeFrame) {
 			  fillStyle: '#FFFFFF',
 			  x: x, y: y,
 			  width: w, height: h,
-			  cornerRadius: 10,
 
 			  click: toggle
 		});
