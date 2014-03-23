@@ -1,25 +1,12 @@
-spaA
-===
+Pillar
+======
 
-Yo dis gon be da futurz.
+An app that helps people track mood, and provide help when they are depressed.
 
-api
-====
+**Built using:**
 
-1. `cd api`
-
-2. Install node.js dependencies
-
-        npm install
-
-3. Start mongo
-
-        mongod --dbpath data/
-
-4. Start redis server
-    
-        redis-server
-
-5. Start the app
-
-        node app.js
+- Knockout.js
+- PhoneGap
+- jQuery
+- HTML5
+- Lots of caffeine

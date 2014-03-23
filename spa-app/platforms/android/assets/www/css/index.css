@@ -39,7 +39,8 @@ body {
 }
 
 #message-app {
-    padding: 40px;
+    padding: 0px;
+    margin: 0px;
 }
 
 body > div.ui-page.ui-page-theme-a.ui-page-header-fixed.ui-page-footer-fixed.ui-page-active > div > div.contents.ui-tabs.ui-widget.ui-widget-content.ui-corner-all {
@@ -48,7 +49,7 @@ body > div.ui-page.ui-page-theme-a.ui-page-header-fixed.ui-page-footer-fixed.ui-
 
 #questionPrompt {
     font-family: 'Open Sans Condensed', helvetica, sans-serif;
-    margin: 30px 0px 80px;
+    margin: 30px 0px 40px;
     text-shadow: none;
     width: 100%;
     text-align: center;
@@ -71,11 +72,6 @@ body > div.ui-page.ui-page-theme-a.ui-page-header-fixed.ui-page-footer-fixed.ui-
     margin: 0 15px;
 }
 
-.message-box {
-    margin: 15px ;
-    padding: 20px !important;
-}
-
 div.ui-slider {
     margin: 30px;
 }
@@ -84,15 +80,30 @@ div.ui-slider {
     margin: auto 40px;
 }
 
-.time-stamp {
+.white_font {
     color: white;
 }
 
 #support-button {
     background-color:  #546975;
     border: none;
+    color: white;
+    float: left;
 }
 
-#support {
-    color: white !important;
+#inbox-button {
+    background-color:  #546975;
+    border: none;
+    color: white;
+    float:right;
 }
+
+#message-replies {
+    padding: 15px;
+}
+
+.message-box {
+    padding: 15px;
+}
+
+

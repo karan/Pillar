@@ -1,6 +1,8 @@
-window.device = window.device || {
-    'uuid' : 'testuserstring'
-};
+if(typeof window.device == 'undefined') {
+    window.device = {
+        'uuid' : window.navigator.userAgent
+    };
+}
 
 var app = {
     viewModel : null,

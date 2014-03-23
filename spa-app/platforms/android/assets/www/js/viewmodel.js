@@ -30,11 +30,13 @@ var ViewModel = function(init) {
 	self.allmessages = new ko.observableArray();
 
 	self.currentMessage = new ko.observable('');
+	self.currentMessageID = new ko.observable('');
 	self.currentReplies = new ko.observableArray();
 	self.dataPoints = [];
 	self.prayer = new ko.observable('');
 	self.showPrayer = new ko.observable(false);
 	self.toggleReplyMessage = new ko.observable(false);
+	self.inboxMessages = new ko.observableArray();
 
 
 	self.rating = ko.computed(function() {
@@ -76,7 +78,7 @@ var ViewModel = function(init) {
 	    var range = parseInt($("#time-selector :radio:checked").val());
 	    //user self.dataPoints here
 	    new Chart("#graph", self.dataPoints, range);
-	}
+	};
 
 	var resetForm = function() {
 		self.questionNumber(0);
@@ -99,7 +101,7 @@ var ViewModel = function(init) {
 	};
 
 	var loadMessages = function() {
-		$.get(app.server + '/allmessages', function(data) {
+		$.getJSON(app.server + '/allmessages', function(data) {
 			for(var i = 0; i < data.messages.length; i++) {
 				self.allmessages.push(data.messages[i]);
 			}
@@ -109,6 +111,7 @@ var ViewModel = function(init) {
 	var loadVM = function(data) {
 		loadUser(data.user);
 		loadMessages();
+		self.getInboxMessages();
 		self.formAnswers.push({
 			'prompt' : 'Have you felt low in spirits or sad?',
 			'answer' : new ko.observable(2)
@@ -205,7 +208,8 @@ var ViewModel = function(init) {
 	self.addMessage = function() {
 		var message = $('#newMessage').val();
 		$.post(app.server + '/addmessage', {'message' : message}, function(data) {
-			self.allmessages.unshift(data.message);
+			//self.allmessages.unshift(data.message);
+			$('#newMessage').val('');
 			$("#me-page-link").removeClass("ui-btn-active");
 			$("#me-page-link").removeClass("ui-state-persist");
 			$("#activity-page-link").addClass("ui-btn-active");
@@ -237,23 +241,53 @@ var ViewModel = function(init) {
 
 	self.sendSupport = function() {
 		console.log(self.currentMessage());
+		if(self.toggleReplyMessage() && $("#reply-message").val() != '') {
+			$.post(app.server + '/sendmessage', {'messageID' : self.currentMessageID(), 'message' : $("#reply-message").val()}, function(data) {
+				$("#reply-message").val('');
+				self.toggleReplyMessage(false);
+				$("#me-page-link").removeClass("ui-btn-active");
+				$("#me-page-link").removeClass("ui-state-persist");
+				$("#activity-page-link").addClass("ui-btn-active");
+				$("#activity-page-link").addClass("ui-state-persist");
+			}, "json");
+		}
+		if(self.showPrayer() && self.prayer() != '') {
+			$.post(app.server + '/sendmessage', {'messageID' : self.currentMessageID(), 'message' : self.prayer()}, function(data) {
+				self.prayer('');
+				self.showPrayer(false);
+				$("#me-page-link").removeClass("ui-btn-active");
+				$("#me-page-link").removeClass("ui-state-persist");
+				$("#activity-page-link").addClass("ui-btn-active");
+				$("#activity-page-link").addClass("ui-state-persist");
+			}, "json");
+		}
+		return true;
+	};
+
+	self.getInboxMessages = function() {
+		self.inboxMessages.removeAll();
+		$.getJSON(app.server + '/mymessages', function(data) {
+			for(var i = 0; i < data.messages.length; i++) {
+				self.inboxMessages.push(data.messages[i]);
+			}
+		});
 	};
 
 	self.goToMessage = function(message) {
 		var messageID = message._id;
+		self.currentMessageID(messageID);
 		$.getJSON(app.server + '/getmessage?messageID=' + messageID, function(data) {
 			self.currentReplies.removeAll(); 
 			self.currentMessage(data["message"]["message"]);
 			for (var i=0; i<data["message"]["replies"].length; i++)
 				self.currentReplies.push(data["message"]["replies"][i]["message"]);
-			console.log(self.currentReplies);
 			$("#me-page-link").removeClass("ui-btn-active");
 			$("#me-page-link").removeClass("ui-state-persist");
 			$("#activity-page-link").addClass("ui-btn-active");
 			$("#activity-page-link").addClass("ui-state-persist");
 		});
 		return true;
-	}
+	};
 
 	$(window).resize(respondCanvas);
 	loadVM(init);
