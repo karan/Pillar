@@ -9,10 +9,13 @@ var DataPoint = function(stamp, value) {
 	};
 }
 
-var Chart = function(canvas, data, timeFrame) {
+var Chart = function(canvas, data, timeFrame, sample) {
 	if(data.length == 0) {
+		console.log("uh oh")
 		return;
 	}
+
+	console.log(data);
 
 	//out comes drawing on canvas
 	var brush = $(canvas);
@@ -28,6 +31,25 @@ var Chart = function(canvas, data, timeFrame) {
 	var span = timeFrame;
 	var barWidth = (brush.width() - 2 * padding)/ numBars;
 
+	if(sample) {
+		var opc = 0.5;
+		brush.addLayer({
+			type: 'text',
+			name: 'hint',
+			strokeStyle: '#000',
+			strokeWidth: 2,
+			text: 'Start recording your mood to see your data here.',
+			x: padding + barWidth / 2,
+			y: 1.5 * padding,
+			fromCenter: false,
+			fontSize: barWidth / 6,
+			fontFamily: 'sans-serif'
+		});
+
+	} else {
+		var opc = 1;
+	}
+
 	var drawLegend = function() {
 		brush.addLayer({
 			type: 'line',
@@ -35,6 +57,7 @@ var Chart = function(canvas, data, timeFrame) {
 			  strokeWidth: 2,
 			  x1: padding, y1: 1.5 * padding,
 			  x2: padding, y2: brush.height() - padding,
+			  opacity: opc,
 		});
 
 		brush.addLayer({
@@ -43,6 +66,7 @@ var Chart = function(canvas, data, timeFrame) {
 			  strokeWidth: 2,
 			  x1: 1.5 * padding, y1: brush.height() - padding + padding / 2,
 			  x2: brush.width() - padding, y2: brush.height() - padding + padding / 2,
+			  opacity: opc,
 		});
 
 		var faceSize = Math.max(0.75 * padding, 20);
@@ -53,6 +77,7 @@ var Chart = function(canvas, data, timeFrame) {
 			x: padding,
 			y: brush.height() - 0.5 * padding,
 			width: faceSize, height: faceSize,
+			opacity: opc,
 		})
 
 		brush.addLayer({
@@ -61,6 +86,7 @@ var Chart = function(canvas, data, timeFrame) {
 			x: padding,
 			y: padding,
 			width: faceSize, height: faceSize,
+			opacity: opc,
 		})
 	};
 
@@ -115,17 +141,19 @@ var Chart = function(canvas, data, timeFrame) {
 					x: x,
 					y: y - h / 2 - brush.height() / 15,
 					strokeWidth: 2,
-					text: "" + score
+					text: "" + score,
+					opacity: opc,
 				});
 				brush.drawText({
 		  			layer: true,
 					name: 'date',
 					fillStyle: '#000000',
-					fontSize: barWidth / 8,
+					fontSize: Math.max(barWidth / 4, 20),
 					x: x,
 					y: y,
 					strokeWidth: 2,
-					text: (date.getMonth() + 1) + "/" + date.getDate()
+					text: (date.getMonth() + 1) + "/" + date.getDate(),
+					opacity: opc,
 				});
 				brush.drawLayers();
 				
@@ -144,6 +172,7 @@ var Chart = function(canvas, data, timeFrame) {
 			  fillStyle: '#FFFFFF',
 			  x: x, y: y,
 			  width: w, height: h,
+			  opacity: opc,
 
 			  click: toggle
 		});
@@ -162,7 +191,8 @@ var Chart = function(canvas, data, timeFrame) {
 			  fillStyle: '#000',
 			  x: x, 
 			  y: y - h/2,
-			  width: barWidth / 8, height: barWidth / 8
+			  width: barWidth / 8, height: barWidth / 8,
+			  opacity: opc,
 		});
 	};
 	var now = new Date();

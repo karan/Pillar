@@ -20,9 +20,12 @@
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/css \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/img \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/js \
+/home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/face2.png \
+/home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/face.png \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/plugins/org.apache.cordova.device \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/plugins/org.apache.cordova.device/www \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/plugins/org.apache.cordova.device/www/device.js \
+/home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/css/Comfortaa_Regular.ttf \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/css/images \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/css/jquery.mobile-1.4.2.min.css \
 /home/aaron/Dropbox/SharedProjects/SPA/spa-app/platforms/android/assets/www/css/index.css \
