@@ -88,9 +88,9 @@
         <div class="ui-body ui-body-b prayer" data-bind="visible: showPrayer, text: prayer, click: removePrayer"></div>
         <a data-rel="back" data-role="button" data-bind="visible: toggleReplyMessage() || showPrayer(), click: sendSupport" data-inline="true" data-theme="a">Send Support!</a>
         <div data-bind="visible: currentReplies().length > 0">
-            <p>Support</p>
-            <div class="ui-body ui-body-a ui-corner-all" data-bind="foreach: currentReplies()">
-                <p><span data-bind="text: $data"> </span></p>
+            <p>Support from the community:</p>
+            <div data-bind="foreach: currentReplies()">
+                <p><span data-bind="text: $data" class="ui-body ui-body-a ui-corner-all"> </span></p>
             </div>
         </div>
     </div>
