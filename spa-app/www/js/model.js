@@ -61,7 +61,8 @@ var Chart = function(canvas, data, timeFrame) {
 			  width: brush.width() / 40, height: brush.width() / 40
 		});*/
 
-		var faceSize = Math.max(brush.width() / 40, 20);
+		var s = Math.min(0.6 * padding, barWidth / 6);
+		var faceSize = Math.max(s, 20);
 
 		brush.addLayer({
 			type: 'image',
