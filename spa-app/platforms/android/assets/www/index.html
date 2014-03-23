@@ -29,11 +29,12 @@
             </div>
             <div data-role="ui-content" id="activity-page">
                 <div class="message-box">
-                <a id="support-button" class="ui-btn ui-icon-plus ui-btn-icon-top ui-btn-inline" href="#new-note-app">Get support</a>
-                
+                    <a id="support-button" class="ui-btn ui-icon-plus ui-btn-icon-top ui-btn-inline" href="#new-note-app">Get support</a>
+                    <a id="inbox-button" class="ui-btn ui-icon-mail ui-btn-icon-top ui-btn-inline" href="#inbox-app">My Messages</a>
+                    <div style="clear:both;"></div>
                     <div data-bind="foreach: allmessages()" data-role="listview" data-inset="true">
                         <li>
-                            <p class="time-stamp">posted: <span class="time-stamp" data-bind="text: $root.prettyDate(created_at)"></span></p>
+                            <p class="white_font">posted: <span class="time-stamp" data-bind="text: $root.prettyDate(created_at)"></span></p>
                             <a href="#message-app" data-bind="click: $parent.goToMessage"><span data-bind="text: message"> </span></a>
                         </li>
                     </div>
@@ -68,21 +69,21 @@
             <a data-rel="back" data-icon="delete">Cancel</a>
             <h1>View Message</h1>
         </div>
-
-        <p>Anonymous Note:</p>
+        
+        <div id="message-replies">
+        <p class="white_font">Anonymous Note:</p>
         <div class="ui-body ui-body-a ui-corner-all">
-
-        <div class="ui-body ui-body-a ui-corner-all message-box">
-
             <span data-bind="text: currentMessage()"></span>
         </div>
-        <a data-role="button" data-bind="click: generatePrayer" data-inline="true" data-theme="a">Generate Prayer</a>
-        <a data-role="button" data-bind="click: showAddMessage" data-inline="true" data-theme="a">Message</a>
+        <div>
+            <a data-role="button" data-bind="click: generatePrayer" data-inline="true" data-theme="a">Generate Prayer</a>
+            <a data-role="button" data-bind="click: showAddMessage" data-inline="true" data-theme="a">Message</a>
+        </div>
         <div data-bind="visible: toggleReplyMessage">
-            <textarea></textarea>
+            <textarea id="reply-message" placeholder="Type your words of encouragement here!"></textarea>
         </div>
         <div class="ui-body ui-body-b prayer" data-bind="visible: showPrayer, text: prayer, click: removePrayer"></div>
-        <a data-role="button" data-bind="visible: toggleReplyMessage() || showPrayer(), click: sendSupport" data-inline="true" data-theme="a">Send Support!</a>
+        <a data-rel="back" data-role="button" data-bind="visible: toggleReplyMessage() || showPrayer(), click: sendSupport" data-inline="true" data-theme="a">Send Support!</a>
         <div data-bind="visible: currentReplies().length > 0">
             <p>Support</p>
             <div class="ui-body ui-body-a ui-corner-all" data-bind="foreach: currentReplies()">
@@ -90,16 +91,29 @@
             </div>
         </div>
     </div>
+    </div>
 
     <div id="new-note-app" class="app" data-role="page">
-        <div class="dark-gray" data-role="header" data-position="fixed">
+        <div data-role="header" data-position="fixed">
             <a data-rel="back" data-icon="delete">Cancel</a>
-            <h1 id="support">Get support</h1>
+            <h1>Get support</h1>
         </div>
-
-        <textarea autofocus required rows=10 maxlength=2000 placeholder="Anonymously share what's troubling you with others, and get support." name="message" id="newMessage"></textarea>
+        <textarea autofocus required rows="10" maxlength="2000" placeholder="Anonymously share what's troubling you with others, and get support." name="message" id="newMessage"></textarea>
         <a data-role="button" data-bind="click: addMessage" data-rel="back" data-inline="true" data-theme="a">Submit</a>
+    </div>
 
+    <div id="inbox-app" class="app" data-role="page">
+        <div data-role="header" data-position="fixed">
+            <a data-rel="back" data-icon="delete">Close</a>
+            <a data-bind="click: getInboxMessages" data-icon="refresh">Refresh</a>
+            <h1>Inbox</h1>
+        </div>
+        <div class="ui-body ui-body-a ui-corner-all" data-bind="foreach: inboxMessages">
+            <p><em><span data-bind="text: message"> </span></em></p>
+            <ul data-role="listview" data-bind="foreach: replies">
+                <li data-bind="text: message"></li>
+            </ul>
+        </div>
     </div>
 
     <script type="text/javascript" src="cordova.js"></script>
