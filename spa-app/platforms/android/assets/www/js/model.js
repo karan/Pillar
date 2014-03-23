@@ -109,9 +109,9 @@ var Chart = function(canvas, data, timeFrame) {
 		  			layer: true,
 					name: 'label',
 					fillStyle: '#000000',
-					fontSize: '24pt',
+					fontSize: brush.height() / 12,
 					x: x,
-					y: y - h / 2 - 40,
+					y: y - h / 2 - brush.height() / 15,
 					strokeWidth: 2,
 					text: "" + score
 				});
@@ -119,7 +119,7 @@ var Chart = function(canvas, data, timeFrame) {
 		  			layer: true,
 					name: 'date',
 					fillStyle: '#000000',
-					fontSize: '14pt',
+					fontSize: barWidth / 2.5,
 					x: x,
 					y: y,
 					strokeWidth: 2,
