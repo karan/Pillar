@@ -45,23 +45,7 @@ var Chart = function(canvas, data, timeFrame) {
 			  x2: brush.width() - padding, y2: brush.height() - padding + padding / 2,
 		});
 
-		/*brush.addLayer({
-			type: 'ellipse',
-			  fillStyle: '#ABFF9F',
-			  x: padding, 
-			  y: brush.height() - 0.5 * padding,
-			  width: brush.width() / 40, height: brush.width() / 40
-		});
-
-		brush.addLayer({
-			type: 'ellipse',
-			  fillStyle: '#ABFF9F',
-			  x: padding, 
-			  y: padding,
-			  width: brush.width() / 40, height: brush.width() / 40
-		});*/
-
-		var faceSize = Math.max(brush.width() / 40, 20);
+		var faceSize = Math.max(0.75 * padding, 20);
 
 		brush.addLayer({
 			type: 'image',
