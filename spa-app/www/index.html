@@ -46,9 +46,9 @@
                     <input id="answer" type="range" name="slider-fill" id="slider-fill" value="2" min="1" max="5" data-highlight="true" data-bind="value: currentQuestion().answer, slider: currentQuestion().answer" />
                     <div class="ui-grid-a ui-responsive custom">
                         <div class="ui-block-a"><a data-role="button" data-bind="click: previousQuestion, visible: showPrevious()" data-inline="true" data-inline="true" data-theme="a" class="ui-btn ui-shadow ui-corner-all">Previous</a></div>
-                        <div class="ui-block-b"><a data-role="button" data-bind="click: nextQuestion, visible: showNext()" data-inline="true" data-theme="b" class="ui-btn ui-shadow ui-corner-all">Next</a></div>     
+                        <div class="ui-block-b"><a data-role="button" data-bind="click: nextQuestion, visible: showNext()" data-inline="true" data-theme="a" class="ui-btn ui-shadow ui-corner-all">Next</a><a data-role="button" data-inline="true" data-theme="a" class="ui-btn ui-shadow ui-corner-all" data-bind="click: submitAnswers, visible: !showNext()">Submit</a></div>
+
                     </div>
-                    <a data-role="button" data-bind="click: submitAnswers, visible: !showNext()">Submit</a> 
                 </div>
             </div>
             <div id="footing" data-role="footer" data-position="fixed" data-tap-toggle="false">

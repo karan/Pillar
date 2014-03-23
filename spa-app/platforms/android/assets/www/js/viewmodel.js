@@ -33,6 +33,26 @@ var ViewModel = function(init) {
 	self.currentMessage = new ko.observable('');
 	self.currentReplies = new ko.observableArray();
 	self.dataPoints = [];
+	self.prayer = new ko.observable('');
+
+
+	self.rating = ko.computed(function() {
+		if(typeof self.formAnswers()[self.questionNumber()] != 'undefined') {
+			var val = self.formAnswers()[self.questionNumber()].answer();
+			if(val == 1) {
+				return "Never";
+			} else if(val == 2) {
+				return "Rarely";
+			} else if(val == 3) {
+				return "Sometimes";
+			} else if(val == 4) {
+				return "Mostly";
+			} else if(val == 5) {
+				return "Always";
+			}
+		}
+		return "";
+	});
 
     self.currentQuestion = ko.computed(function() {
         return self.formAnswers()[self.questionNumber()];
@@ -201,6 +221,20 @@ var ViewModel = function(init) {
 
 		}, "json"); */
 	};
+
+	self.generatePrayer = function() {
+
+	};
+
+	self.showAddMessage = function() {
+
+	};
+
+	self.showPrayer = function() {
+
+	};
+
+
 
 	self.drawChart = function() {
 		respondCanvas();
