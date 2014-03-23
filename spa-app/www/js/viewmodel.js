@@ -157,6 +157,7 @@ var ViewModel = function(init) {
 	}
 
 	self.goToForms = function() {
+		resetForm();
 		return true;
 	};
 
