@@ -33,7 +33,7 @@
                 
                     <div data-bind="foreach: allmessages()" data-role="listview" data-inset="true">
                         <li>
-                            <p class="time-stamp">posted: <span class="time-stamp" data-bind="text: $root.prettyDate(created_at)"></span></p>
+                            <p class="white_font">posted: <span class="time-stamp" data-bind="text: $root.prettyDate(created_at)"></span></p>
                             <a href="#message-app" data-bind="click: $parent.goToMessage"><span data-bind="text: message"> </span></a>
                         </li>
                     </div>
@@ -69,17 +69,19 @@
             <h1>View Message</h1>
         </div>
 
-        <p>Anonymous Note:</p>
+        <p class="white_font">Anonymous Note:</p>
         <div class="ui-body ui-body-a ui-corner-all">
 
-        <div class="ui-body ui-body-a ui-corner-all message-box">
+        <div class="ui-body ui-body-a ui-corner-all">
 
             <span data-bind="text: currentMessage()"></span>
         </div>
-        <a data-role="button" data-bind="click: generatePrayer" data-inline="true" data-theme="a">Generate Prayer</a>
-        <a data-role="button" data-bind="click: showAddMessage" data-inline="true" data-theme="a">Message</a>
+        <div id="action-buttons">
+            <a data-role="button" data-bind="click: generatePrayer" data-inline="true" data-theme="a">Generate Prayer</a>
+            <a data-role="button" data-bind="click: showAddMessage" data-inline="true" data-theme="a">Message</a>
+        </div>
         <div data-bind="visible: toggleReplyMessage">
-            <textarea></textarea>
+            <textarea placeholder="Type your words of encouragement here!"></textarea>
         </div>
         <div class="ui-body ui-body-b prayer" data-bind="visible: showPrayer, text: prayer, click: removePrayer"></div>
         <a data-role="button" data-bind="visible: toggleReplyMessage() || showPrayer(), click: sendSupport" data-inline="true" data-theme="a">Send Support!</a>

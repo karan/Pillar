@@ -84,7 +84,7 @@ div.ui-slider {
     margin: auto 40px;
 }
 
-.time-stamp {
+.white_font {
     color: white;
 }
 
@@ -94,3 +94,7 @@ div.ui-slider {
     color: white;
 }
 
+#action-buttons {
+    margin: 15px;
+    padding: 20px;
+}
