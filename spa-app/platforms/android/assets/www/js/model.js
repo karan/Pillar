@@ -9,50 +9,63 @@ var DataPoint = function(stamp, value) {
 	};
 }
 
-var Chart = function(canvas, data) {
+var Chart = function(canvas, data, timeFrame) {
+	if(data.length == 0) {
+		return;
+	}
+	console.log(timeFrame);
+	//timeframe == 1 if last week, 2 if last month, 3 if last year
+
 	//out comes drawing on canvas
 	var brush = $(canvas);
 	brush.attr('width', brush.width());
 	brush.attr('height', brush.height());
-
 	var padding = brush.width() / 25;
 
+	var numBars = Math.max(5, data.length);
 	var beginning = data[0].timeStamp;
 	var end = data[data.length - 1].timeStamp;
 	var span = end - beginning;
-	var barWidth = (brush.width() - 2 * padding)/ data.length;
+	var barWidth = (brush.width() - 2 * padding)/ numBars;
 
+	var drawLegend = function() {
+		brush.addLayer({
+			type: 'line',
+			  strokeStyle: '#000',
+			  strokeWidth: 2,
+			  x1: padding, y1: 1.5 * padding,
+			  x2: padding, y2: brush.height() - padding,
+		});
 
+		brush.addLayer({
+			type: 'line',
+			  strokeStyle: '#000',
+			  strokeWidth: 2,
+			  x1: 1.5 * padding, y1: brush.height() - padding + padding / 2,
+			  x2: brush.width() - padding, y2: brush.height() - padding + padding / 2,
+		});
 
-	brush.drawLine({
-		  strokeStyle: '#000',
-		  strokeWidth: 2,
-		  x1: padding, y1: 1.5 * padding,
-		  x2: padding, y2: brush.height() - padding,
-	});
+		brush.addLayer({
+			type: 'ellipse',
+			  fillStyle: '#ABFF9F',
+			  x: padding, 
+			  y: brush.height() - 0.5 * padding,
+			  width: barWidth / 6, height: barWidth / 6
+		});
 
-	brush.drawLine({
-		  strokeStyle: '#000',
-		  strokeWidth: 2,
-		  x1: 1.5 * padding, y1: brush.height() - padding + padding / 2,
-		  x2: brush.width() - padding, y2: brush.height() - padding + padding / 2,
-	});
+		brush.addLayer({
+			type: 'ellipse',
+			  fillStyle: '#ABFF9F',
+			  x: padding, 
+			  y: padding,
+			  width: barWidth / 6, height: barWidth / 6
+		});
+	};
 
-	brush.drawEllipse({
-		  fillStyle: '#ABFF9F',
-		  x: padding, 
-		  y: brush.height() - 0.5 * padding,
-		  width: barWidth / 6, height: barWidth / 6
-	});
-
-	brush.drawEllipse({
-		  fillStyle: '#ABFF9F',
-		  x: padding, 
-		  y: padding,
-		  width: barWidth / 6, height: barWidth / 6
-	});
+	drawLegend();
 
 	var lineObj = {
+		type: 'line',
 		  strokeStyle: '#FFF',
 		  strokeWidth: 6,
 		  rounded: true,
@@ -60,48 +73,70 @@ var Chart = function(canvas, data) {
 	};
 
 	var drawBar = function(index, score, maxScore) {
-		console.log("drawing");
 		var x = padding + barWidth / 2 + index * barWidth;
 		var w = barWidth - 2 * barWidth / 10;
 		var h = score * (brush.height() - padding - padding / 2)/ maxScore
 		var y = brush.height() - h / 2 - padding;
+		var white = true;
 
-		brush.drawRect({
-			layer: true,
-			  fillStyle: 'FFF',
-			  x: x, 
-			  y: y,
-			  width: w,
-			  height: h,
+		var toggle = function(layer) {
+		{
+			  if(white) {
+			  		$(this).animateLayer(layer, {
+			  			fillStyle: '#ABFF9F',
+			  		}, 250);
+			  	} else {
+			  		$(this).animateLayer(layer, {
+			  			fillStyle: '#FFFFFF',
+			  		}, 250);
+			  	}
+			  	brush.drawLayers();
+			  }
+			  white = !white;
+		}
+
+		// Create and draw a rectangle layer
+		brush.addLayer({
+			type: 'rectangle',
+			  layer: true,
+			  name: 'bar' + index,
+			  fillStyle: '#FFFFFF',
+			  x: x, y: y,
+			  width: w, height: h,
 			  cornerRadius: 10,
 
-			click: function(layer) {
-				    // Animate layer when touched
-				    $(this).animateLayer(layer, {
-				      fillStyle: '#ABFF9F',
-				    }, 250);
-			  },
-
+			  click: toggle
 		});
 
-		brush.drawEllipse({
+		drawPoint(x, y, h, barWidth);
+
+		lineObj['x' + (index + 1)] = x;
+		lineObj['y' + (index + 1)] = y - h/2;
+
+
+	};
+
+	var drawPoint = function(x, y, h, barWidth) {
+		brush.addLayer({
+			type: 'ellipse',
 			  fillStyle: '#000',
 			  x: x, 
 			  y: y - h/2,
 			  width: barWidth / 8, height: barWidth / 8
 		});
-
-		lineObj['x' + (index + 1)] = x;
-		lineObj['y' + (index + 1)] = y - h/2;
 	};
-
-
 
 	for(i = 0; i < data.length; i++) {
 		drawBar(i, data[i].score, 50);
 	}
 
-	brush.drawLine(lineObj);
+	brush.addLayer(lineObj);
+
+
+
+
+	brush.drawLayers();
+
 
 
 	

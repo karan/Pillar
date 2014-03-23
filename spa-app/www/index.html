@@ -16,6 +16,16 @@
         </div>
         <div class="contents" data-role="tabs">
             <div data-role="ui-content" id="me-page">
+                <form id="time-selector">
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="3" data-bind="click: selectTime">
+                        <label for="radio-choice-h-2a">Last Year</label>
+                        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="2" data-bind="click: selectTime">
+                        <label for="radio-choice-h-2b">Last Month</label>
+                        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2c" value="1" checked="checked" data-bind="click: selectTime">
+                        <label for="radio-choice-h-2c">Last Week</label>
+                    </fieldset>
+                </form>
                 <div class="fullscreen">
                     <canvas id="graph"></canvas>
                 </div>
@@ -40,9 +50,9 @@
             <div id="footing" data-role="footer" data-position="fixed" data-tap-toggle="false">
                 <div data-role="navbar">
                     <ul>
-                        <li><a id="me-page-link" href="#me-page" data-bind="click: goToMe" class="ui-btn-active ui-state-persist">Me</a></li>
-                        <li><a id="activity-page-link" href="#activity-page" data-bind="click: goToActivity">Activity</a></li>
-                        <li><a id="record-page-link" href="#record-page" data-bind="click: goToForms">Record</a></li>
+                        <li><a id="me-page-link" href="#me-page" data-bind="click: goToMe" class="ui-btn-active ui-state-persist ui-icon-user ui-btn-icon-top">Me</a></li>
+                        <li><a id="activity-page-link" href="#activity-page" class="ui-icon-heart ui-btn-icon-top" data-bind="click: goToActivity">Activity</a></li>
+                        <li><a id="record-page-link" href="#record-page" class="ui-icon-edit ui-btn-icon-top" data-bind="click: goToForms">Record</a></li>
                     </ul>
                 </div>
             </div>

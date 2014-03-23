@@ -31,6 +31,7 @@ var ViewModel = function(init) {
 
 	self.currentMessage = new ko.observable('');
 	self.currentReplies = new ko.observableArray();
+	self.dataPoints = [];
 
     self.currentQuestion = ko.computed(function() {
         return self.formAnswers()[self.questionNumber()];
@@ -46,11 +47,13 @@ var ViewModel = function(init) {
 
 	var respondCanvas = function(){ 
 		var w = $(window).width();
-		var h = $(window).height() - $("#title").height() - $("#footing").height() - 20;
+		var h = $(window).height() - $("#title").height() - $("#footing").height() - 75;
 		$("#graph").css({'width' : w, 'height' : h});
 	    $("#graph").attr('width', w);
 	    $("#graph").attr('height', h);
-	    new Chart("#graph", [new DataPoint(120120, 10), new DataPoint(120303, 40), new DataPoint(120403, 30), new DataPoint(120503, 20), new DataPoint(120603, 50), new DataPoint(120703, 35)]);
+	    var range = parseInt($("#time-selector :radio:checked").val());
+	    //user self.dataPoints here
+	    new Chart("#graph", self.dataPoints, range);
 	}
 
 	var resetForm = function() {
@@ -60,9 +63,17 @@ var ViewModel = function(init) {
 		}
 	};
 
+	var loadPoints = function(data) {
+		var result = [];
+		for(var i = 0; i < data.length; i++) {
+			result.push(new DataPoint((new Date(data[i].timestamp).getTime() / 1000), data[i].score || 50));
+		}
+		return result;
+	};
+
 	var loadVM = function(data) {
-		self.drawChart();
 		self.user = data.user;
+		self.dataPoints = loadPoints(data.user.scores || []);
 		self.formAnswers.push({
 			'prompt' : 'Have you felt low in spirits or sad?',
 			'answer' : new ko.observable(2)
@@ -104,12 +115,13 @@ var ViewModel = function(init) {
 			'prompt' : 'Have you suffered from reduced appetite?',
 			'answer' : new ko.observable(2)
 		});
+		self.drawChart();
 	};
 
 	var calculateScore = function() {
 		var sum = 0;
 		for(var i = 0; i < self.formAnswers().length; i++) {
-			sum += self.formAnswers()[i].answer();
+			sum += parseInt(self.formAnswers()[i].answer());
 		}
 		return 50 - sum;
 	}
@@ -141,6 +153,10 @@ var ViewModel = function(init) {
 		return true;
 	};
 
+	self.selectTime = function() {
+		self.drawChart();
+	}
+
 	self.goToForms = function() {
 		$("#title > h1").text("New Entry");
 		return true;
@@ -165,6 +181,7 @@ var ViewModel = function(init) {
 	self.submitAnswers = function() {
 		var score = calculateScore();
 		$.post(app.server + '/addscore', {'score' : score}, function(data) {
+			self.dataPoints.push(new DataPoint(new Date().toString(), score));
 			$("#record-page-link").removeClass("ui-btn-active");
 			$("#record-page-link").removeClass("ui-state-persist");
 			resetForm();
