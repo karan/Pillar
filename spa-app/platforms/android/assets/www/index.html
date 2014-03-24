@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.2.min.css" />
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <title>Pillar</title>
@@ -114,8 +113,8 @@
         <h1 data-bind="visible: inboxMessages().length == 0" style="width:100%; text-align: center;">Sorry, you have no messages</h1>
         <div data-bind="visible: inboxMessages().length > 0">
             <div class="ui-body ui-body-a ui-corner-all" data-bind="foreach: inboxMessages">
-                <p><em><span data-bind="text: message"> </span></em></p>
-                <ul data-role="listview" data-bind="foreach: replies">
+                <!--<p><em><span data-bind="text: message"> </span></em></p>-->
+                <ul class="support-messages-inbox" data-role="listview" data-bind="foreach: replies">
                     <li data-bind="text: message"></li>
                 </ul>
             </div>

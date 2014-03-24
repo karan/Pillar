@@ -88,7 +88,7 @@ var ViewModel = function(init) {
 	    }
 	    var samplePoints = []
 	    for(i = 0; i < 5; i++) {
-	    	samplePoints.push(new DataPoint(sampleTimestamps[i]), sampleScores[i]);
+	    	samplePoints.push(new DataPoint(sampleTimestamps[i], sampleScores[i]));
 	    }
 	    if(self.dataPoints.length == 0) {
 	    	console.log("no data")
@@ -110,7 +110,7 @@ var ViewModel = function(init) {
 	var loadPoints = function(data) {
 		var result = [];
 		for(var i = 0; i < data.length; i++) {
-			result.push(new DataPoint((new Date(data[i].timestamp).getTime() / 1000), data[i].score || 50));
+			result.push(new DataPoint((new Date(data[i].timestamp).getTime()), data[i].score || 50));
 		}
 		return result;
 	};
@@ -300,6 +300,7 @@ var ViewModel = function(init) {
 			for(var i = 0; i < data.messages.length; i++) {
 				self.inboxMessages.push(data.messages[i]);
 			}
+			$(".support-messages-inbox").listview({ defaults: true });
 		});
 	};
 

@@ -300,6 +300,7 @@ var ViewModel = function(init) {
 			for(var i = 0; i < data.messages.length; i++) {
 				self.inboxMessages.push(data.messages[i]);
 			}
+			$(".support-messages-inbox").listview({ defaults: true });
 		});
 	};
 
