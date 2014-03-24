@@ -78,14 +78,14 @@
             <span data-bind="text: currentMessage()"></span>
         </div>
         <div>
-            <a data-role="button" data-bind="click: generatePrayer" data-inline="true" data-theme="a">Generate Prayer</a>
+            <!-- <a data-role="button" data-bind="click: generatePrayer" data-inline="true" data-theme="a">Generate Prayer</a> -->
             <a data-role="button" data-bind="click: showAddMessage" data-inline="true" data-theme="a">Message</a>
         </div>
         <div data-bind="visible: toggleReplyMessage">
             <textarea id="reply-message" placeholder="Type your words of encouragement here!"></textarea>
         </div>
-        <div class="ui-body ui-body-b prayer" data-bind="visible: showPrayer, text: prayer, click: removePrayer"></div>
-        <a data-rel="back" data-role="button" data-bind="visible: toggleReplyMessage() || showPrayer(), click: sendSupport" data-inline="true" data-theme="a">Send Support!</a>
+       <!--  <div class="ui-body ui-body-b prayer" data-bind="visible: showPrayer, text: prayer, click: removePrayer"></div> --> 
+        <a data-rel="back" data-role="button" data-bind="visible: toggleReplyMessage(), click: sendSupport" data-inline="true" data-theme="a">Send Support!</a>
         <div data-bind="visible: currentReplies().length > 0">
             <p>Support from the community:</p>
             <div data-bind="foreach: currentReplies()">
